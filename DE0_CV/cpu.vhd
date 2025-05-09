@@ -354,6 +354,10 @@ begin
 -- LOAD Direto  			RX <- M[End]
 --========================================================================		
 			IF(IR(15 DOWNTO 10) = LOAD) THEN -- Busca o endereco
+				M1 <= PC;				-- M1 = PC
+				Rw <= '0';				-- RW = 0
+				IncPC := '1';			-- IncPC = 1
+				LoadMar := '1';		-- LoadMAR = 1
 
 				state := exec;  -- Vai para o estado de Executa para buscar o dado do endereco
 			END IF;			
@@ -577,6 +581,10 @@ begin
 -- EXEC LOAD DIReto  			RX <- M[END]
 --========================================================================
 			IF(IR(15 DOWNTO 10) = LOAD) THEN
+				M1 <= MAR;			-- M1 = MAR
+				RW <= '0';			-- RW = 0
+				selM2 := sMem;		-- selM2 = sMem 
+				LoadReg(RX) :=  '1';	-- LoadReg[rx] = 1
 				
 				state := fetch;
 			END IF;
