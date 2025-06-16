@@ -342,7 +342,7 @@ begin
 --========================================================================			
 			IF(IR(15 DOWNTO 10) = LOADIMED) THEN
 				M1 <= PC;				-- M1 <- PC
-				Rw <= '0';				-- Rw <= '0'
+				RW <= '0';				-- Rw <= '0'
 				selM2 := sMeM; 		-- M2 <- MEM	
 				LoadReg(RX) := '1';	-- LRx <- 1	
 				IncPC := '1';  		-- IncPC <- 1	
@@ -355,9 +355,9 @@ begin
 --========================================================================		
 			IF(IR(15 DOWNTO 10) = LOAD) THEN -- Busca o endereco
 				M1 <= PC;				-- M1 = PC
-				Rw <= '0';				-- RW = 0
+				RW <= '0';				-- RW = 0
 				IncPC := '1';			-- IncPC = 1
-				LoadMar := '1';		-- LoadMAR = 1
+				LoadMAR := '1';		-- LoadMAR = 1
 
 				state := exec;  -- Vai para o estado de Executa para buscar o dado do endereco
 			END IF;			
@@ -368,7 +368,11 @@ begin
 -- STORE   DIReto			M[END] <- RX
 --========================================================================			
 			IF(IR(15 DOWNTO 10) = STORE) THEN  -- Busca o endereco
-		
+				M1 <= PC;				-- M1 = PC
+				RW <= '0';				-- RW = 0
+				IncPC := '1';			-- IncPC = 1
+				LoadMAR := '1';		-- LoadMAR = 1			-- M1 = PC
+				
 				state := exec;  -- Vai para o estado de Executa para gravar Registrador no endereco
 			END IF;					
 
@@ -376,6 +380,11 @@ begin
 -- LOAD Indexado por registrador 			RX <- M(RY)
 --========================================================================		
 			IF(IR(15 DOWNTO 10) = LOADINDEX) THEN
+				M4 := REG(RY);
+				M1 <= M4;
+				RW <= '0';
+				selM2 := sMem;
+				LoadReg(RX) := '1';
 				
 				state := fetch;
 			END IF;					
@@ -384,6 +393,11 @@ begin
 -- STORE indexado por registrador 			M[RX] <- RY
 --========================================================================		
 			IF(IR(15 DOWNTO 10) = STOREINDEX) THEN 
+				M4 := REG(RX);
+				M1 <= M4;
+				Rw <= '1';
+				M3 := REG(RY);
+				M5 <= M3;
 				
 				state := fetch;
 			END IF;					
@@ -400,7 +414,17 @@ begin
 
 --========================================================================		
 			IF(IR(15 DOWNTO 10) = MOV) THEN 
-			
+				IF(IR(0) = '0') THEN
+					M4 := REG(RY);
+					selM2 := sM4;
+					LoadReg(RX) := '1';
+				ELSIF(IR(1) = '0') THEN
+					selM2 := sSP;
+					LoadReg(RX) := '1';
+				ELSE
+					M4 := REG(RX);
+					LoadSP := '1';
+				END IF;
 			  
 				state := fetch;
 			END IF;
@@ -409,6 +433,19 @@ begin
 -- ARITH OPERATION ('INC' NOT INCLUDED) 			RX <- RY (?) RZ
 --========================================================================
 			IF(IR(15 DOWNTO 14) = ARITH AND IR(13 DOWNTO 10) /= INC) THEN
+				M3 := REG(RY);
+				M4 := REG(RZ);
+				X <= M3; 		-- Define as entradas da ULA
+				Y <= M4;
+				
+				OP(5 DOWNTO 4) <= ARITH;
+				OP(3 DOWNTO 0) <= IR(13 DOWNTO 10); -- Define a operação na ULA
+				OP(6) <= IR(0); -- Define se vai haver carry ou não
+				
+				selM2 := sULA;
+				LoadReg(RX) := '1';
+				selM6 := sULA;
+				LoadFR := '1';
 				
 				state := fetch;
 			END IF;
@@ -417,6 +454,24 @@ begin
 -- INC/DEC			RX <- RX (+ or -) 1
 --========================================================================			
 			IF(IR(15 DOWNTO 14) = ARITH AND (IR(13 DOWNTO 10) = INC))	THEN
+				M3 := REG(RX);
+				M4 := x"0001"; -- Um caso específico onde o segundo operador é sempre 1
+				X <= M3; 		-- Define as entradas da ULA
+				Y <= M4;
+				
+				-- Define se é INC ou DEC
+				OP(5 DOWNTO 4) <= ARITH;
+				IF(IR(6) = '0') THEN
+					OP(3 DOWNTO 0) <= ADD;
+				ELSE
+					OP(3 DOWNTO 0) <= SUB;
+				END IF;
+				OP(6) <= IR(0); -- Define se vai haver carry ou não
+				
+				selM2 := sULA;
+				LoadReg(RX) := '1';
+				selM6 := sULA;
+				LoadFR := '1';
 				
 				state := fetch;
 			END IF;
@@ -425,6 +480,19 @@ begin
 -- LOGIC OPERATION ('SHIFT', and 'CMP'  NOT INCLUDED)  			RX <- RY (?) RZ
 --========================================================================		
 			IF(IR(15 DOWNTO 14) = LOGIC AND IR(13 DOWNTO 10) /= SHIFT AND IR(13 DOWNTO 10) /= CMP) THEN 
+				M3 := REG(RY);
+				M4 := REG(RZ);
+				X <= M3; 		-- Define as entradas da ULA
+				Y <= M4;
+				
+				OP(5 DOWNTO 4) <= LOGIC;
+				OP(3 DOWNTO 0) <= IR(13 DOWNTO 10); -- Define a operação na ULA
+				OP(6) <= IR(0); -- Define se vai haver carry ou não
+				
+				selM2 := sULA;
+				LoadReg(RX) := '1';
+				selM6 := sULA;
+				LoadFR := '1';
 				
 				state := fetch;
 			END IF;			
@@ -456,7 +524,19 @@ begin
 -- CMP		RX, RY
 --========================================================================		
 			IF(IR(15 DOWNTO 14) = LOGIC AND IR(13 DOWNTO 10) = CMP) THEN 
+				M3 := REG(RY);
+				M4 := REG(RZ);
+				X <= M3; 		-- Define as entradas da ULA
+				Y <= M4;
 				
+				OP(5 DOWNTO 4) <= LOGIC;
+				OP(3 DOWNTO 0) <= CMP; -- Define a operação na ULA
+				OP(6) <= IR(0); -- Define se vai haver carry ou não
+				
+				selM2 := sULA;
+				selM6 := sULA;
+				LoadFR := '1';
+
 				state := fetch;
 			END IF;
 		
@@ -584,7 +664,7 @@ begin
 				M1 <= MAR;			-- M1 = MAR
 				RW <= '0';			-- RW = 0
 				selM2 := sMem;		-- selM2 = sMem 
-				LoadReg(RX) :=  '1';	-- LoadReg[rx] = 1
+				LoadReg(RX) := '1';	-- LoadReg[rx] = 1
 				
 				state := fetch;
 			END IF;
@@ -593,6 +673,10 @@ begin
 -- EXEC STORE DIReto 			M[END] <- RX
 --========================================================================
 			IF(IR(15 DOWNTO 10) = STORE) THEN 
+				M1 <= MAR;
+				RW <= '1';
+				M3 := REG(RX);
+				M5 <= M3;
 				
 				state := fetch;
 			END IF;
