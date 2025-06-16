@@ -524,8 +524,8 @@ begin
 -- CMP		RX, RY
 --========================================================================		
 			IF(IR(15 DOWNTO 14) = LOGIC AND IR(13 DOWNTO 10) = CMP) THEN 
-				M3 := REG(RY);
-				M4 := REG(RZ);
+				M3 := REG(RX);
+				M4 := REG(RY);
 				X <= M3; 		-- Define as entradas da ULA
 				Y <= M4;
 				
