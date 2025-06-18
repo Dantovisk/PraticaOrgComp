@@ -19,7 +19,7 @@
 ; 3584 aqua							1110 0000
 ; 3840 branco						1111 0000
 
-jmp main
+jmp main 
 
 ;---- Inclusão de arquivos ----
 tile_map : var #1120
@@ -269,7 +269,7 @@ tile_map : var #1120
 	static tile_map + #243, #'#'
 	static tile_map + #244, #'#'
 	static tile_map + #245, #'#'
-	static tile_map + #246, #'?'
+	static tile_map + #246, #'S'
 	static tile_map + #247, #' '
 	static tile_map + #248, #' '
 	static tile_map + #249, #' '

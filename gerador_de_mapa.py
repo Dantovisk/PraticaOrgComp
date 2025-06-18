@@ -23,7 +23,7 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
             elif r > 200 and g > 200 and b < 100:
                 mapa.append('o')
             # Verde - 'S' (G alto, R e B baixos)
-            elif g > 200 and r < 100 and b < 100:
+            elif g > 160 and r < 90 and b < 90:
                 mapa.append('S')
             # Vermelho - 'E' (R alto, G e B baixos)
             elif r > 200 and g < 100 and b < 100:

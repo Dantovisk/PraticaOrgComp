@@ -245,7 +245,7 @@ tile_map : var #1120
 	static tile_map + #243, #'#'
 	static tile_map + #244, #'#'
 	static tile_map + #245, #'#'
-	static tile_map + #246, #'?'
+	static tile_map + #246, #'S'
 	static tile_map + #247, #' '
 	static tile_map + #248, #' '
 	static tile_map + #249, #' '
