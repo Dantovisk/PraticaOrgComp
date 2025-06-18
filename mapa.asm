@@ -1,3 +1,10 @@
+; Posicoes importantes
+player_pos: var #1
+	static player_pos + #0, #246 ; posicao inicial do player no grid
+end_pos: var #1
+	static end_pos + #0, #451 ; posicao do destino no grid
+
+; Mapa gerado a partir da imagem mapa1.png
 tile_map : var #1120
 	static tile_map + #0, #'#'
 	static tile_map + #1, #'#'
