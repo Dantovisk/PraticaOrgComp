@@ -1,27 +1,37 @@
+from PIL import Image
+
 def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
-    def converter_caractere(c):
-        # Aqui você pode alterar o mapeamento se quiser
-        if c == '#':
-            return 'A'
-        elif c == '.':
-            return 'B'
-        else:
-            return 'A'  # padrão
-
-    # Lê o arquivo de entrada
-    with open(nome_arquivo_entrada, 'r') as f:
-        linhas = [linha.strip() for linha in f.readlines()]
+    # Abre a imagem PNG
+    img = Image.open(nome_arquivo_entrada)
+    pixels = img.load()
+    width, height = img.size
     
-    n, m = map(int, linhas[0].split())  # Lê as dimensões n x m
-    grid = linhas[1:n+1]  # Pega o grid de n linhas
-
     mapa = []
     
-    # Processa o grid e converte os caracteres para o formato esperado
-    for linha in grid:
-        for c in linha[:m]:  # Garantir que a linha tenha no máximo m caracteres
-            mapa.append(converter_caractere(c))
-
+    # Processa cada pixel da imagem
+    for y in range(height):
+        for x in range(width):
+            r, g, b = pixels[x, y][:3]  # Pega os componentes RGB (ignora alpha se existir)
+            
+            # Preto - '#'
+            if r < 50 and g < 50 and b < 50:
+                mapa.append('#')
+            # Branco - ' '
+            elif r > 200 and g > 200 and b > 200:
+                mapa.append(' ')
+            # Amarelo - 'o' (considerando R e G altos, B baixo)
+            elif r > 200 and g > 200 and b < 100:
+                mapa.append('o')
+            # Verde - 'S' (G alto, R e B baixos)
+            elif g > 200 and r < 100 and b < 100:
+                mapa.append('S')
+            # Vermelho - 'E' (R alto, G e B baixos)
+            elif r > 200 and g < 100 and b < 100:
+                mapa.append('E')
+            else:
+                # Padrão para cores não mapeadas
+                mapa.append('?')
+    
     # Gerar o arquivo .asm
     with open(nome_arquivo_saida, 'w') as f:
         f.write(f"tile_map : var #{len(mapa)}\n")
@@ -31,4 +41,6 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
     print(f"Arquivo '{nome_arquivo_saida}' gerado com sucesso!")
 
 # Exemplo de uso
-# gerar_mapa_asm('entrada.txt')
+MAPA = "mapa1.png"
+print("gerando", MAPA)
+gerar_mapa_asm('mapa1.png')
