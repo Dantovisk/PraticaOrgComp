@@ -22,12 +22,12 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
             # Branco - ' '
             elif r > 200 and g > 200 and b > 200:
                 mapa.append(' ')
-            # Amarelo - 'o' (considerando R e G altos, B baixo)
+            # Amarelo - '*' (considerando R e G altos, B baixo) - moedinha
             elif r > 200 and g > 200 and b < 100:
-                mapa.append('o')
-            # Verde - 'S' (G alto, R e B baixos)
+                mapa.append('*')
+            # Verde - '@' (G alto, R e B baixos) - é o nosso jogador
             elif g > 160 and r < 90 and b < 90:
-                mapa.append('S')
+                mapa.append('@')
                 pos_start = index
             # Vermelho - 'E' (R alto, G e B baixos)
             elif r > 200 and g < 100 and b < 100:
