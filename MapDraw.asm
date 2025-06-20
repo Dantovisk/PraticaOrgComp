@@ -19,30 +19,12 @@
 ; 3584 aqua							1110 0000
 ; 3840 branco						1111 0000
 
-jmp main 
-
 ;---- Inclusão de arquivos ----
 #include mapa.asm
 
 ;---- Variáveis ----
 pos_inicial_mapa : var #1
     static pos_inicial_mapa, #80  ; Posição inicial para imprimir o mapa
-
-;---- Inicio do Programa Principal -----
-main:
-    ; Imprime o mapa na tela a partir da posição 80
-    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-    loadn r1, #tile_map          ; Endereço do mapa
-    loadn r2, #256               ; Cor branca
-    loadn r3, #1120              ; Tamanho do mapa
-    
-    call imprimir_mapa
-    
-    halt
-
-;---- Fim do Programa Principal -----
-
-
 
 ;------------------------------------------------------
 ; Rotina: imprimir_mapa
@@ -70,6 +52,8 @@ imprimir_mapa:
 imprimir_mapa_loop:
     cmp r4, r3          ; Verifica se todos os caracteres foram impressos
     jeq imprimir_mapa_fim
+
+    ; Aqui falta fazer uma cor personalizada para cada char
 
     loadi r5, r1        ; Carrega o caractere do mapa (mem[r1] → r5)
     add r5, r5, r2      ; Aplica a cor ao caractere (r5 = caractere + cor)
