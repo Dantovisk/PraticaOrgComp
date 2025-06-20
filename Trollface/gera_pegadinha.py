@@ -7,7 +7,7 @@ Args:
     threshold (int): Limiar para considerar um pixel como "ligado" (0-255)
 """
 
-
+#python gera_pegadinha.py trollface.png
 from PIL import Image
 import sys
 
