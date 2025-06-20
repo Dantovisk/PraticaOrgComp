@@ -43,6 +43,8 @@ def montar_arquivo_principal(arquivo_entrada, arquivo_saida):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Uso: python montar_jogo.py <arquivo_entrada.asm> <arquivo_saida.asm>")
+        print("Uso: python montaJogo.py <arquivo_entrada.asm> <arquivo_saida.asm>")
     else:
         montar_arquivo_principal(sys.argv[1], sys.argv[2])
+
+#python montaJogo.py main.asm jogo.asm
