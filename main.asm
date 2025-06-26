@@ -7,10 +7,10 @@ jmp main
 ;---- Variáveis ----
 ; Variáveis do player
 game_state : var #1  ; 0 - default; 1 - ganhou; 2 - perdeu
-static game_state, #1
+static game_state, #0
 
 points : var #1
-static points + #0, #18
+static points + #0, #0
 
 points_string: string "Moedas "
 
@@ -115,7 +115,7 @@ pos_decrementando:	; Movimento para esquerda ou para cima -> Decrementa pos
 confere_colisao:
     loadn r6, #tile_map	; r6 = end(tile_map)
 	add r6, r6, r1	; r6 = end(tile_map[prox_pos])
-	loadi r6, r6	; r6 = tile_map[prox_pos] | sprite que vamos comparar
+	loadi r6, r6	; r6 = tile_map[prox_pos] | sprite que vamos comparard
 
 
     ; ────┤ Posicao vazia: continua movendo ├────
@@ -146,13 +146,15 @@ confere_colisao:
 	; ────┤ Agua: perder jogo ├────
 	loadn r4, #'a'
 	cmp r6, r4
-	; jeq fim_jogo
+    loadn r2, #2
+	jeq fim_jogo
 	
 
 	; ────┤ Bandeira: ganhar jogo ├────
 	loadn r4, #'E'
 	cmp r6, r4
-    ; jeq fim_jogo
+    loadn r2, #1
+    jeq fim_jogo
 
     jmp le_mov      ; Reinicia o loop do jogo
 
@@ -222,7 +224,7 @@ movimentar_player:
     loadn r4, #512
 
 	call imprime_pixel
-	; call delay_clock
+	call delay_clock
 
 	rts
 
@@ -320,3 +322,28 @@ imprime_num_moedas:
     pop r3
 
     rts
+
+delay_clock:
+	push r0
+	push r1
+	push r2
+	
+	loadn r0, #1		; n de loops
+	loadn r2, #0
+	
+	delay_loop:
+	loadn r1, #300000	; n de nops
+	dec r0
+	delay_nop:	; roda (n_loops * n_nops) vezes
+	nop
+	dec r1
+	cmp r1, r2
+	jne delay_nop
+	
+	cmp r0, r2
+	jne delay_loop
+	
+	pop r2
+	pop r1
+	pop r0
+	rts
