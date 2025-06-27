@@ -2,6 +2,164 @@ jmp main
 
 ;---- Inclusão de arquivos ----
 
+;---- Strings do Menu ----
+titulo: string "=============== GELO FINO =============="
+opcao1: string "        1 - INICIAR JOGO"
+opcao2: string "        2 - INSTRUCOES"
+opcao3: string "        3 - SAIR"
+voltar_texto: string "PRESSIONE QUALQUER TECLA PARA VOLTAR"
+
+instrucoes_titulo: string "=== INSTRUCOES ==="
+instrucoes_texto: string "MOVIMENTO: W-A-S-D | OBJETIVO: COLETAR MOEDAS (o) E CHEGAR NO FINAL (E) | EVITE A AGUA (a)"
+
+;---- Menu do Jogo ----
+menu:
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+    
+    call limpa_tela
+    
+    ; Imprime título do jogo
+    loadn r0, #40        ; Posição centralizada
+    loadn r1, #titulo    ; Endereço do texto
+    loadn r2, #2816      ; Cor amarela
+    call imprime_string
+    
+    ; Imprime opções do menu
+    loadn r0, #200       ; Posição das opções
+    loadn r1, #opcao1
+    loadn r2, #0         ; Cor branca
+    call imprime_string
+    
+    loadn r0, #240
+    loadn r1, #opcao2
+    call imprime_string
+    
+    loadn r0, #280
+    loadn r1, #opcao3
+    call imprime_string
+    
+    ; Aguarda seleção do jogador
+menu_loop:
+    inchar r3            ; Lê entrada do teclado
+    
+    loadn r4, #'1'       ; Opção 1
+    cmp r3, r4
+    jeq seleciona_opcao1
+    
+    loadn r4, #'2'       ; Opção 2
+    cmp r3, r4
+    jeq seleciona_opcao2
+    
+    loadn r4, #'3'       ; Opção 3
+    cmp r3, r4
+    jeq seleciona_opcao3
+    
+    jmp menu_loop        ; Se não for nenhuma opção válida, espera novamente
+
+seleciona_opcao1:
+    ; Iniciar jogo (retorna para main)
+    call limpa_tela
+    pop r4
+    pop r3
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+seleciona_opcao2:
+    ; Mostra instruções
+    call limpa_tela
+    loadn r0, #40
+    loadn r1, #instrucoes_titulo
+    loadn r2, #2816      ; Amarelo
+    call imprime_string
+    
+    loadn r0, #120
+    loadn r1, #instrucoes_texto
+    loadn r2, #0         ; Branco
+    call imprime_string
+    
+    loadn r0, #800
+    loadn r1, #voltar_texto
+    loadn r2, #1792      ; Prata
+    call imprime_string
+    
+    ; Aguarda qualquer tecla para voltar
+    call le_tecla
+    
+    jmp menu             ; Volta para o menu
+
+seleciona_opcao3:
+    ; Sair do jogo
+    halt
+
+;---- Funções Auxiliares ----
+limpa_tela:
+    push r0
+    push r1
+    push r2
+    
+    loadn r0, #0         ; Posição inicial
+    loadn r1, #' '       ; Espaço em branco
+    loadn r2, #0         ; Cor
+    
+limpa_loop:
+    outchar r1, r0
+    inc r0
+    loadn r3, #1200      ; Tamanho da tela
+    cmp r0, r3
+    jne limpa_loop
+    
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+imprime_string:
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+    
+    loadn r3, #'\0'      ; Terminador de string
+    
+imprime_loop:
+    loadi r4, r1         ; Carrega caractere da string
+    cmp r4, r3           ; Verifica se é o terminador
+    jeq imprime_fim
+    
+    add r4, r4, r2       ; Aplica cor ao caractere
+    outchar r4, r0       ; Imprime na posição
+    
+    inc r0               ; Próxima posição na tela
+    inc r1               ; Próximo caractere da string
+    jmp imprime_loop
+    
+imprime_fim:
+    pop r4
+    pop r3
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+le_tecla:
+	loadn r0, #0
+	loadn r1, #0
+	
+	inchar r1		; Lê teclado
+	
+	cmp r0, r1		; nao leu nada -> loop pra ler denovo
+	jeq le_tecla
+
+    pop r1
+    pop r0
+    rts
 ; ------- TABELA DE CORES -------
 ; adicione ao caracter para Selecionar a cor correspondente
 
@@ -1202,14 +1360,13 @@ imprimir_mapa_fim:
     pop r1
     pop r0
     rts
-
 ;---- Variáveis ----
 ; Variáveis do player
 game_state : var #1  ; 0 - default; 1 - ganhou; 2 - perdeu
-static game_state, #1
+static game_state, #0
 
 points : var #1
-static points + #0, #18
+static points + #0, #0
 
 points_string: string "Moedas "
 
@@ -1225,7 +1382,7 @@ static speed + #1, #1	    ; velocidade horizontal (esquerda || direita)
 ;---- Inicio do Programa Principal -----
 main:
     ; Imprime o menu
-    ; call menu  retorna o nivel
+    call menu
 
     ; Imprime o tile_map na tela a partir da posição 80
     load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável

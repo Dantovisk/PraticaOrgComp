@@ -1,8 +1,8 @@
 jmp main 
 
 ;---- Inclusão de arquivos ----
+#include menu.asm
 #include MapDraw.asm
-
 
 ;---- Variáveis ----
 ; Variáveis do player
@@ -26,7 +26,7 @@ static speed + #1, #1	    ; velocidade horizontal (esquerda || direita)
 ;---- Inicio do Programa Principal -----
 main:
     ; Imprime o menu
-    ; call menu  retorna o nivel
+    call menu
 
     ; Imprime o tile_map na tela a partir da posição 80
     load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
