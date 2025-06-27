@@ -2,15 +2,16 @@ jmp main
 
 ;---- Inclusão de arquivos ----
 
-;---- Strings do Menu ----
-titulo: string "=============== GELO FINO =============="
-opcao1: string "        1 - INICIAR JOGO"
-opcao2: string "        2 - INSTRUCOES"
-opcao3: string "        3 - SAIR"
-voltar_texto: string "PRESSIONE QUALQUER TECLA PARA VOLTAR"
+;---- Strings do menu ----
+titulo: string "============== GELO FINO ==============="
+opcao1: string "1 - INICIAR JOGO"
+opcao2: string "2 - INSTRUCOES"
+opcao3: string "3 - SAIR"
 
-instrucoes_titulo: string "=== INSTRUCOES ==="
-instrucoes_texto: string "MOVIMENTO: W-A-S-D | OBJETIVO: COLETAR MOEDAS (o) E CHEGAR NO FINAL (E) | EVITE A AGUA (a)"
+instrucoes_titulo: string "============== INSTRUCOES =============="
+instrucoes_mov: string "MOVIMENTO: W - A - S - D"
+instrucoes_obj: string "OBJETIVO: Colete as moedas (o) e chegue no final (E)"
+instrucoes_evt: string "PERIGO: Evite a agua (a) que aparece depois que voce passa"
 
 ;---- Menu do Jogo ----
 menu:
@@ -19,7 +20,8 @@ menu:
     push r2
     push r3
     push r4
-    
+
+menu_imprimir:  
     call limpa_tela
     
     ; Imprime título do jogo
@@ -34,11 +36,11 @@ menu:
     loadn r2, #0         ; Cor branca
     call imprime_string
     
-    loadn r0, #240
+    loadn r0, #400
     loadn r1, #opcao2
     call imprime_string
     
-    loadn r0, #280
+    loadn r0, #600
     loadn r1, #opcao3
     call imprime_string
     
@@ -79,19 +81,24 @@ seleciona_opcao2:
     call imprime_string
     
     loadn r0, #120
-    loadn r1, #instrucoes_texto
+    loadn r1, #instrucoes_mov
+    loadn r2, #0         ; Branco
+    call imprime_string
+
+	loadn r0, #320
+    loadn r1, #instrucoes_obj
+    loadn r2, #0         ; Branco
+    call imprime_string
+
+	loadn r0, #560
+    loadn r1, #instrucoes_evt
     loadn r2, #0         ; Branco
     call imprime_string
     
-    loadn r0, #800
-    loadn r1, #voltar_texto
-    loadn r2, #1792      ; Prata
-    call imprime_string
-    
     ; Aguarda qualquer tecla para voltar
-    call le_tecla
+    call espera_tecla
     
-    jmp menu             ; Volta para o menu
+    jmp menu_imprimir             ; Volta para o menu
 
 seleciona_opcao3:
     ; Sair do jogo
@@ -148,15 +155,17 @@ imprime_fim:
     pop r0
     rts
 
-le_tecla:
-	loadn r0, #0
-	loadn r1, #0
-	
-	inchar r1		; Lê teclado
-	
-	cmp r0, r1		; nao leu nada -> loop pra ler denovo
-	jeq le_tecla
-
+espera_tecla:
+    push r0
+    push r1
+    
+aguarda_soltar:  
+	; Tecla pressionada - aguarda liberação (evita múltiplas leituras)
+    loadn r0, #255
+	inchar r1
+	cmp r1, r0
+    jne aguarda_soltar
+    
     pop r1
     pop r0
     rts
