@@ -4,9 +4,9 @@ jmp main
 
 ;---- Strings do menu ----
 titulo: string "============== GELO FINO ==============="
-opcao1: string "1 - INICIAR JOGO"
-opcao2: string "2 - INSTRUCOES"
-opcao3: string "3 - SAIR"
+opcao1: string "										1 - INICIAR JOGO"
+opcao2: string "										2 - INSTRUCOES"
+opcao3: string "										3 - SAIR"
 
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
