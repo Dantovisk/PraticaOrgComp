@@ -7,8 +7,8 @@ opcao3: string "3 - SAIR"
 
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
-instrucoes_obj: string "OBJETIVO: Colete as moedas (o) e chegue no final (E)"
-instrucoes_evt: string "PERIGO: Evite a agua (a) que aparece depois que voce passa"
+instrucoes_obj: string "OBJETIVO: COLETE AS MOEDAS (o) E CHEGUE NO FINAL (E)"
+instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
 
 ;---- Menu do Jogo ----
 menu:
