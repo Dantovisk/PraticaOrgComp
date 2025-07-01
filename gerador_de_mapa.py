@@ -21,17 +21,17 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
             # Preto - '#'
             if r < 50 and g < 50 and b < 50:
                 mapa.append("#")
-            # Cinza - 'Nao sei' - Gelo Duplo
+            # Cinza - '+' - Gelo Duplo
             elif r > 100 and r < 200 and r == g and g == b:
-                mapa.append("NAOSEI")
+                mapa.append("+")
                 qnt_gelos += 1
             # Branco - ' '
             elif r > 200 and g > 200 and b > 200:
                 mapa.append(" ")
                 qnt_gelos += 1
-            # Rosa - 'Nao sei tbm' - Portao
+            # Rosa - '/' - Portao
             elif r > 200 and g > 100 and b > 100:
-                mapa.append("NAOSEIAINDA")
+                mapa.append("/")
             # Amarelo - '*' (considerando R e G altos, B baixo) - chave 
             elif r > 200 and g > 200 and b < 100:
                 mapa.append("*")
@@ -47,8 +47,13 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
                 # Padrão para cores não mapeadas
                 mapa.append("?")
 
+    # Determina automaticamente o tamanho necessário para total_gelos
+    gelos_str = str(qnt_gelos)
+    tamanho_gelos = len(gelos_str) + 1  # +1 para o null terminator
+
     # Gera o arquivo .asm
     with open(nome_arquivo_saida, "w") as f:
+        
         # Primeiras variáveis com posição inicial do player e destino
         f.write("; Posicoes importantes\n")
         f.write("player_pos: var #1\n")
@@ -59,7 +64,11 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
         f.write(
             f"\tstatic end_pos + #0, #{pos_end if pos_end is not None else 0} ; posicao do destino no grid\n\n"
         )
-
+        # Variável total_gelos com tamanho dinâmico
+        f.write(f"total_gelos: var #{tamanho_gelos}\n")
+        for i in range(len(gelos_str)):
+            f.write(f"\tstatic total_gelos + #{i}, #'{gelos_str[i]}' ; digito {i}\n")
+        f.write(f"\tstatic total_gelos + #{len(gelos_str)}, #'\\0' ; null terminator\n\n")
         # Mapa propriamente dito
         f.write(f"; Mapa gerado a partir da imagem {nome_arquivo_entrada}\n")
         f.write(f"tile_map : var #{len(mapa)}\n")

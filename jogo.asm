@@ -196,6 +196,12 @@ player_pos: var #1
 end_pos: var #1
 	static end_pos + #0, #451 ; posicao do destino no grid
 
+total_gelos: var #4
+	static total_gelos + #0, #'3' ; digito 0
+	static total_gelos + #1, #'5' ; digito 1
+	static total_gelos + #2, #'1' ; digito 2
+	static total_gelos + #3, #'\0' ; null terminator
+
 ; Mapa gerado a partir da imagem mapa1.png
 tile_map : var #1120
 	static tile_map + #0, #'#'
@@ -444,14 +450,14 @@ tile_map : var #1120
 	static tile_map + #243, #'#'
 	static tile_map + #244, #'#'
 	static tile_map + #245, #'#'
-	static tile_map + #246, #'S'
+	static tile_map + #246, #'@'
 	static tile_map + #247, #' '
 	static tile_map + #248, #' '
 	static tile_map + #249, #' '
 	static tile_map + #250, #' '
 	static tile_map + #251, #' '
 	static tile_map + #252, #' '
-	static tile_map + #253, #'o'
+	static tile_map + #253, #'*'
 	static tile_map + #254, #' '
 	static tile_map + #255, #' '
 	static tile_map + #256, #' '
@@ -459,14 +465,14 @@ tile_map : var #1120
 	static tile_map + #258, #' '
 	static tile_map + #259, #' '
 	static tile_map + #260, #' '
-	static tile_map + #261, #'o'
+	static tile_map + #261, #'*'
 	static tile_map + #262, #' '
 	static tile_map + #263, #' '
 	static tile_map + #264, #' '
 	static tile_map + #265, #' '
 	static tile_map + #266, #' '
 	static tile_map + #267, #' '
-	static tile_map + #268, #'o'
+	static tile_map + #268, #'*'
 	static tile_map + #269, #' '
 	static tile_map + #270, #' '
 	static tile_map + #271, #' '
@@ -511,7 +517,7 @@ tile_map : var #1120
 	static tile_map + #310, #' '
 	static tile_map + #311, #' '
 	static tile_map + #312, #' '
-	static tile_map + #313, #'o'
+	static tile_map + #313, #'*'
 	static tile_map + #314, #'#'
 	static tile_map + #315, #'#'
 	static tile_map + #316, #'#'
@@ -564,7 +570,7 @@ tile_map : var #1120
 	static tile_map + #363, #'#'
 	static tile_map + #364, #'#'
 	static tile_map + #365, #'#'
-	static tile_map + #366, #'o'
+	static tile_map + #366, #'*'
 	static tile_map + #367, #' '
 	static tile_map + #368, #' '
 	static tile_map + #369, #' '
@@ -576,7 +582,7 @@ tile_map : var #1120
 	static tile_map + #375, #' '
 	static tile_map + #376, #' '
 	static tile_map + #377, #' '
-	static tile_map + #378, #'o'
+	static tile_map + #378, #'*'
 	static tile_map + #379, #' '
 	static tile_map + #380, #' '
 	static tile_map + #381, #' '
@@ -584,7 +590,7 @@ tile_map : var #1120
 	static tile_map + #383, #' '
 	static tile_map + #384, #' '
 	static tile_map + #385, #' '
-	static tile_map + #386, #'o'
+	static tile_map + #386, #'*'
 	static tile_map + #387, #' '
 	static tile_map + #388, #' '
 	static tile_map + #389, #' '
@@ -654,11 +660,11 @@ tile_map : var #1120
 	static tile_map + #453, #' '
 	static tile_map + #454, #' '
 	static tile_map + #455, #' '
-	static tile_map + #456, #'o'
+	static tile_map + #456, #'*'
 	static tile_map + #457, #' '
 	static tile_map + #458, #' '
 	static tile_map + #459, #' '
-	static tile_map + #460, #'o'
+	static tile_map + #460, #'*'
 	static tile_map + #461, #' '
 	static tile_map + #462, #' '
 	static tile_map + #463, #' '
@@ -666,7 +672,7 @@ tile_map : var #1120
 	static tile_map + #465, #' '
 	static tile_map + #466, #' '
 	static tile_map + #467, #' '
-	static tile_map + #468, #'o'
+	static tile_map + #468, #'*'
 	static tile_map + #469, #' '
 	static tile_map + #470, #' '
 	static tile_map + #471, #' '
@@ -724,7 +730,7 @@ tile_map : var #1120
 	static tile_map + #523, #'#'
 	static tile_map + #524, #'#'
 	static tile_map + #525, #'#'
-	static tile_map + #526, #'o'
+	static tile_map + #526, #'*'
 	static tile_map + #527, #' '
 	static tile_map + #528, #' '
 	static tile_map + #529, #' '
@@ -751,7 +757,7 @@ tile_map : var #1120
 	static tile_map + #550, #' '
 	static tile_map + #551, #' '
 	static tile_map + #552, #' '
-	static tile_map + #553, #'o'
+	static tile_map + #553, #'*'
 	static tile_map + #554, #'#'
 	static tile_map + #555, #'#'
 	static tile_map + #556, #'#'
@@ -911,7 +917,7 @@ tile_map : var #1120
 	static tile_map + #710, #' '
 	static tile_map + #711, #' '
 	static tile_map + #712, #' '
-	static tile_map + #713, #'o'
+	static tile_map + #713, #'*'
 	static tile_map + #714, #'#'
 	static tile_map + #715, #'#'
 	static tile_map + #716, #'#'
@@ -924,7 +930,7 @@ tile_map : var #1120
 	static tile_map + #723, #'#'
 	static tile_map + #724, #'#'
 	static tile_map + #725, #'#'
-	static tile_map + #726, #'o'
+	static tile_map + #726, #'*'
 	static tile_map + #727, #' '
 	static tile_map + #728, #' '
 	static tile_map + #729, #' '
@@ -1015,12 +1021,12 @@ tile_map : var #1120
 	static tile_map + #814, #' '
 	static tile_map + #815, #' '
 	static tile_map + #816, #' '
-	static tile_map + #817, #'o'
+	static tile_map + #817, #'*'
 	static tile_map + #818, #' '
 	static tile_map + #819, #' '
 	static tile_map + #820, #' '
 	static tile_map + #821, #' '
-	static tile_map + #822, #'o'
+	static tile_map + #822, #'*'
 	static tile_map + #823, #' '
 	static tile_map + #824, #' '
 	static tile_map + #825, #' '
@@ -1028,7 +1034,7 @@ tile_map : var #1120
 	static tile_map + #827, #' '
 	static tile_map + #828, #' '
 	static tile_map + #829, #' '
-	static tile_map + #830, #'o'
+	static tile_map + #830, #'*'
 	static tile_map + #831, #' '
 	static tile_map + #832, #' '
 	static tile_map + #833, #' '
@@ -1050,7 +1056,7 @@ tile_map : var #1120
 	static tile_map + #849, #' '
 	static tile_map + #850, #'#'
 	static tile_map + #851, #' '
-	static tile_map + #852, #'o'
+	static tile_map + #852, #'*'
 	static tile_map + #853, #' '
 	static tile_map + #854, #' '
 	static tile_map + #855, #' '
@@ -1064,7 +1070,7 @@ tile_map : var #1120
 	static tile_map + #863, #' '
 	static tile_map + #864, #' '
 	static tile_map + #865, #' '
-	static tile_map + #866, #'o'
+	static tile_map + #866, #'*'
 	static tile_map + #867, #' '
 	static tile_map + #868, #' '
 	static tile_map + #869, #' '
@@ -1377,7 +1383,7 @@ static game_state, #0
 points : var #1
 static points + #0, #0
 
-points_string: string "Moedas "
+points_string: string "GELOS: "
 
 points_pos : var #1
 static points_pos + #0, #0
@@ -1488,6 +1494,7 @@ confere_colisao:
 	cmp r6, r4
 	jne posicao_nao_vazia
 	
+	call atualiza_gelos	
     call atualiza_chao
 	call movimentar_player
     jmp le_mov      ; continua a movimentação
@@ -1495,21 +1502,20 @@ confere_colisao:
     
 
     posicao_nao_vazia:
-	; ────┤ Moeda: chichin ├────
-	loadn r4, #'o'
+	; ────┤ Chave: muito chave neh truta, nois eh fechamento ├────
+	loadn r4, #'*'
 	cmp r6, r4
-	jne nao_coletou_moeda
+	jne nao_coletou_chave
 
-    call atualiza_moedas	
     call atualiza_chao
 	call movimentar_player
 	jmp le_mov      ; continua a movimentação
 	; ────────────────────────────────────────
 	
 
-	nao_coletou_moeda:
+	nao_coletou_chave:
 	; ────┤ Agua: perder jogo ├────
-	loadn r4, #'a'
+	loadn r4, #'.'
 	cmp r6, r4
     loadn r2, #2
 	jeq fim_jogo
@@ -1557,7 +1563,7 @@ atualiza_chao:
     loadn r6, #tile_map	; r6 = end(tile_map)
 	add r6, r6, r2	; r6 = end(tile_map[chao])
  
-    loadn r3, #'a'
+    loadn r3, #'.'
 	storei r6, r3	; Atualiza o tile_map
     loadn r4, #1024
 
@@ -1583,7 +1589,7 @@ movimentar_player:
 	loadn r6, #tile_map	; r3 = end(tile_map)
 
     mov r2, r0
-    loadn r3, #'S'
+    loadn r3, #'@'
 	add r6, r6, r2	; r6 = end(tile_map[prox_pos])
 	storei r6, r3	; Atualiza o tile_map
     loadn r4, #512
@@ -1595,16 +1601,16 @@ movimentar_player:
 
 
 ;──────────────────────────────────────────────────────
-; Rotina: atualiza_moedas
+; Rotina: atualiza_gelos
 ; Objetivo: Incrementa a pontuação em 1
 ;──────────────────────────────────────────────────────
-atualiza_moedas:
+atualiza_gelos:
     loadn r2, #points
     loadi r3, r2
     inc r3
     store #points, r3
 
-    call imprime_num_moedas
+    call imprime_num_gelos
     rts
 
 ;──────────────────────────────────────────────────────
@@ -1635,6 +1641,10 @@ imprime_pixel:
 
 imprime_pontuacao:
     push r3
+	push r4
+	push r5
+	push r6
+	push r7
 
     loadn r5, points_string
     load r6, points_pos
@@ -1649,11 +1659,18 @@ imprime_pontuacao:
         cmp r3, r7
         jne string_loop
 
+    pop r7
+    pop r6
+    pop r5
+    pop r4
     pop r3
 
-imprime_num_moedas:
+imprime_num_gelos:
     push r3
     push r4
+    push r5
+    push r6
+    push r7
 
     loadn r3, #-1
     push r3
@@ -1683,21 +1700,44 @@ imprime_num_moedas:
         cmp r4, r3
         jne chars_print
 
+    loadn r7, #47
+	outchar r7, r5
+
+    ;agora imprime a pontuação maxima
+
+    pop r7
+    pop r6
+    pop r5
     pop r4
     pop r3
 
     rts
+
+print_loop:
+    add r7, r4, r5   ; r7 = caractere ASCII
+    outchar r7, r6
+    inc r6
+    pop r5
+    cmp r5, r3
+    jne print_loop
+
+    pop r7
+    pop r6
+    pop r4
+    pop r3
+    rts
+
 
 delay_clock:
 	push r0
 	push r1
 	push r2
 	
-	loadn r0, #1		; n de loops
+	loadn r0, #10		; n de loops
 	loadn r2, #0
 	
 	delay_loop:
-	loadn r1, #300000	; n de nops
+	loadn r1, #60000	; n de nops (MAX é 2^16 = 65,5 mil)
 	dec r0
 	delay_nop:	; roda (n_loops * n_nops) vezes
 	nop
