@@ -67,6 +67,7 @@ seleciona_opcao1:
     pop r2
     pop r1
     pop r0
+    
     rts
 
 seleciona_opcao2:
@@ -156,12 +157,12 @@ espera_tecla:
     push r0
     push r1
     
-aguarda_soltar:  
-	; Tecla pressionada - aguarda liberação (evita múltiplas leituras)
-    loadn r0, #255
-	inchar r1
-	cmp r1, r0
-    jne aguarda_soltar
+    aguarda_soltar:  
+        ; Tecla pressionada - aguarda liberação (evita múltiplas leituras)
+        loadn r0, #255
+        inchar r1
+        cmp r1, r0
+        jne aguarda_soltar
     
     pop r1
     pop r0

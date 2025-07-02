@@ -1,8 +1,8 @@
 jmp main 
 
 ;---- Inclusão de arquivos ----
-#include menu.asm
 #include MapDraw.asm
+#include menu.asm
 
 ;---- Variáveis ----
 ; Variáveis do player
@@ -414,95 +414,25 @@ imprime_num_gelos:
     push r6
     push r7
 
-    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
-    loadn r3, #-1
-    push r3
-
     ; r5 recebe o valor da variável 'points' (número a ser impresso)
     load r5, points
+    call empilha_digitos
 
-    ; r7 = 0 (usado como comparação para parar o loop)
-    loadn r7, #0
+    loadn r5, #7              ; posição de início da impressão
+    call imprime_digitos
+    mov r2, r5                ; salva posição após a impressão
 
-    ; r6 = 10 (divisor para separar os dígitos decimais)
-    loadn r6, #10
-
-    ; Loop para extrair os dígitos decimais de 'points' e empilhá-los (em ordem inversa)
-    chars_loop:
-        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
-        push r4           ; salva o dígito na pilha
-        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
-
-        cmp r5, r7        ; se r5 != 0, continua o loop
-        jne chars_loop
-
-    ; r5 = 7 -> posição onde o primeiro caractere será impresso na tela (coluna 7)
-    loadn r5, #7
-
-    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
-    loadn r6, #'0'
-
-    ; retira o primeiro dígito da pilha
-    pop r4
-
-    chars_print:
-        add r7, r6, r4
-        outchar r7, r5
-        inc r5
-
-        pop r4
-        cmp r4, r3
-        jne chars_print
-
-    ;imprime o '/'
-    loadn r7, #47
+    ; imprime o '/'
+    loadn r7, #'/'
     outchar r7, r5
-
     inc r5
-    mov r2, r5 ; r2 guarda o indice de r5
+    mov r2, r5                ; salva próxima posição
 
-    ;agora imprime a pontuação maxima
-    ;nao ligo pra modularizacao HEHEHEHA
-    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
-    loadn r3, #-1
-    push r3
-
-    ; r5 recebe o valor da variável 'total_gelos' (número a ser impresso)
+    ; imprime total_gelos
     load r5, total_gelos
-
-    ; r7 = 0 (usado como comparação para parar o loop)
-    loadn r7, #0
-
-    ; r6 = 10 (divisor para separar os dígitos decimais)
-    loadn r6, #10
-
-    ; Loop para extrair os dígitos decimais de 'total_gelos' e empilhá-los (em ordem inversa)
-    chars_loop1:
-        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
-        push r4           ; salva o dígito na pilha
-        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
-
-        cmp r5, r7        ; se r5 != 0, continua o loop
-        jne chars_loop1
-
-    ; r5 = r2
+    call empilha_digitos
     mov r5, r2
-
-    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
-    loadn r6, #'0'
-
-    ; retira o primeiro dígito da pilha
-    pop r4
-
-    chars_print1:
-        add r7, r6, r4
-        outchar r7, r5
-        inc r5
-
-        pop r4
-        cmp r4, r3
-        jne chars_print1
-
+    call imprime_digitos
 
     pop r7
     pop r6
@@ -514,12 +444,54 @@ imprime_num_gelos:
     rts
 
 
+;-----------------------------------------
+; empilha_digitos
+; Entrada: r5 contém o número a ser empilhado
+; Saída: pilha com dígitos (terminada com -1)
+; Usa: r3, r4, r5, r6, r7
+empilha_digitos:
+    loadn r3, #-1         ; sentinela
+    push r3
+
+    loadn r6, #10         ; divisor decimal
+    loadn r7, #0          ; valor de comparação
+
+    empilha_loop1:
+        mod r4, r5, r6        ; extrai último dígito
+        push r4
+        div r5, r5, r6
+        cmp r5, r7
+        jne empilha_loop1
+
+    rts
+
+;-----------------------------------------
+; imprime_digitos
+; Entrada: pilha com dígitos, r5 = coluna inicial
+; Usa: r3, r4, r6, r7
+imprime_digitos:
+    loadn r6, #'0'        ; para conversão ASCII
+    pop r4
+
+    imprime_loop1:
+        add r7, r6, r4        ; converte para caractere
+        outchar r7, r5
+        inc r5
+
+        pop r4
+        cmp r4, r3
+        jne imprime_loop1
+
+    rts
+
+
+
 delay_clock:
 	push r0
 	push r1
 	push r2
 	
-	loadn r0, #10		; n de loops
+	loadn r0, #100		; n de loops
 	loadn r2, #0
 	
 	delay_loop:

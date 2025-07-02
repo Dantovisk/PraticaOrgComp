@@ -2,173 +2,6 @@ jmp main
 
 ;---- Inclusão de arquivos ----
 
-;---- Strings do menu ----
-titulo: string "============== GELO FINO ==============="
-opcao1: string "										1 - INICIAR JOGO"
-opcao2: string "										2 - INSTRUCOES"
-opcao3: string "										3 - SAIR"
-
-instrucoes_titulo: string "============== INSTRUCOES =============="
-instrucoes_mov: string "MOVIMENTO: W - A - S - D"
-instrucoes_obj: string "OBJETIVO: COLETE AS MOEDAS (o) E CHEGUE NO FINAL (E)"
-instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
-
-;---- Menu do Jogo ----
-menu:
-    push r0
-    push r1
-    push r2
-    push r3
-    push r4
-
-menu_imprimir:  
-    call limpa_tela
-    
-    ; Imprime título do jogo
-    loadn r0, #40        ; Posição centralizada
-    loadn r1, #titulo    ; Endereço do texto
-    loadn r2, #2816      ; Cor amarela
-    call imprime_string
-    
-    ; Imprime opções do menu
-    loadn r0, #200       ; Posição das opções
-    loadn r1, #opcao1
-    loadn r2, #0         ; Cor branca
-    call imprime_string
-    
-    loadn r0, #400
-    loadn r1, #opcao2
-    call imprime_string
-    
-    loadn r0, #600
-    loadn r1, #opcao3
-    call imprime_string
-    
-    ; Aguarda seleção do jogador
-menu_loop:
-    inchar r3            ; Lê entrada do teclado
-    
-    loadn r4, #'1'       ; Opção 1
-    cmp r3, r4
-    jeq seleciona_opcao1
-    
-    loadn r4, #'2'       ; Opção 2
-    cmp r3, r4
-    jeq seleciona_opcao2
-    
-    loadn r4, #'3'       ; Opção 3
-    cmp r3, r4
-    jeq seleciona_opcao3
-    
-    jmp menu_loop        ; Se não for nenhuma opção válida, espera novamente
-
-seleciona_opcao1:
-    ; Iniciar jogo (retorna para main)
-    call limpa_tela
-    pop r4
-    pop r3
-    pop r2
-    pop r1
-    pop r0
-    rts
-
-seleciona_opcao2:
-    ; Mostra instruções
-    call limpa_tela
-    loadn r0, #40
-    loadn r1, #instrucoes_titulo
-    loadn r2, #2816      ; Amarelo
-    call imprime_string
-    
-    loadn r0, #120
-    loadn r1, #instrucoes_mov
-    loadn r2, #0         ; Branco
-    call imprime_string
-
-	loadn r0, #320
-    loadn r1, #instrucoes_obj
-    loadn r2, #0         ; Branco
-    call imprime_string
-
-	loadn r0, #560
-    loadn r1, #instrucoes_evt
-    loadn r2, #0         ; Branco
-    call imprime_string
-    
-    ; Aguarda qualquer tecla para voltar
-    call espera_tecla
-    
-    jmp menu_imprimir             ; Volta para o menu
-
-seleciona_opcao3:
-    ; Sair do jogo
-    halt
-
-;---- Funções Auxiliares ----
-limpa_tela:
-    push r0
-    push r1
-    push r2
-    
-    loadn r0, #0         ; Posição inicial
-    loadn r1, #' '       ; Espaço em branco
-    loadn r2, #0         ; Cor
-    
-limpa_loop:
-    outchar r1, r0
-    inc r0
-    loadn r3, #1200      ; Tamanho da tela
-    cmp r0, r3
-    jne limpa_loop
-    
-    pop r2
-    pop r1
-    pop r0
-    rts
-
-imprime_string:
-    push r0
-    push r1
-    push r2
-    push r3
-    push r4
-    
-    loadn r3, #'\0'      ; Terminador de string
-    
-imprime_loop:
-    loadi r4, r1         ; Carrega caractere da string
-    cmp r4, r3           ; Verifica se é o terminador
-    jeq imprime_fim
-    
-    add r4, r4, r2       ; Aplica cor ao caractere
-    outchar r4, r0       ; Imprime na posição
-    
-    inc r0               ; Próxima posição na tela
-    inc r1               ; Próximo caractere da string
-    jmp imprime_loop
-    
-imprime_fim:
-    pop r4
-    pop r3
-    pop r2
-    pop r1
-    pop r0
-    rts
-
-espera_tecla:
-    push r0
-    push r1
-    
-aguarda_soltar:  
-	; Tecla pressionada - aguarda liberação (evita múltiplas leituras)
-    loadn r0, #255
-	inchar r1
-	cmp r1, r0
-    jne aguarda_soltar
-    
-    pop r1
-    pop r0
-    rts
 ; ------- TABELA DE CORES -------
 ; adicione ao caracter para Selecionar a cor correspondente
 
@@ -1324,7 +1157,7 @@ tile_map1 : var #1120
 	static tile_map1 + #1119, #'#'
 
 
- ; N�vel atual
+ ; N�vel atual
 nivel_atual: var #1
 	static nivel_atual + #0, #1
 mapa_atual: var #1
@@ -1382,6 +1215,174 @@ imprimir_mapa_fim:
     pop r4
     pop r3
     pop r2
+    pop r1
+    pop r0
+    rts
+;---- Strings do menu ----
+titulo: string "============== GELO FINO ==============="
+opcao1: string "										1 - INICIAR JOGO"
+opcao2: string "										2 - INSTRUCOES"
+opcao3: string "										3 - SAIR"
+
+instrucoes_titulo: string "============== INSTRUCOES =============="
+instrucoes_mov: string "MOVIMENTO: W - A - S - D"
+instrucoes_obj: string "OBJETIVO: COLETE AS MOEDAS (o) E CHEGUE NO FINAL (E)"
+instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
+
+;---- Menu do Jogo ----
+menu:
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+
+menu_imprimir:  
+    call limpa_tela
+    
+    ; Imprime título do jogo
+    loadn r0, #40        ; Posição centralizada
+    loadn r1, #titulo    ; Endereço do texto
+    loadn r2, #2816      ; Cor amarela
+    call imprime_string
+    
+    ; Imprime opções do menu
+    loadn r0, #200       ; Posição das opções
+    loadn r1, #opcao1
+    loadn r2, #0         ; Cor branca
+    call imprime_string
+    
+    loadn r0, #400
+    loadn r1, #opcao2
+    call imprime_string
+    
+    loadn r0, #600
+    loadn r1, #opcao3
+    call imprime_string
+    
+    ; Aguarda seleção do jogador
+menu_loop:
+    inchar r3            ; Lê entrada do teclado
+    
+    loadn r4, #'1'       ; Opção 1
+    cmp r3, r4
+    jeq seleciona_opcao1
+    
+    loadn r4, #'2'       ; Opção 2
+    cmp r3, r4
+    jeq seleciona_opcao2
+    
+    loadn r4, #'3'       ; Opção 3
+    cmp r3, r4
+    jeq seleciona_opcao3
+    
+    jmp menu_loop        ; Se não for nenhuma opção válida, espera novamente
+
+seleciona_opcao1:
+    ; Iniciar jogo (retorna para main)
+    call limpa_tela
+    pop r4
+    pop r3
+    pop r2
+    pop r1
+    pop r0
+    
+    rts
+
+seleciona_opcao2:
+    ; Mostra instruções
+    call limpa_tela
+    loadn r0, #40
+    loadn r1, #instrucoes_titulo
+    loadn r2, #2816      ; Amarelo
+    call imprime_string
+    
+    loadn r0, #120
+    loadn r1, #instrucoes_mov
+    loadn r2, #0         ; Branco
+    call imprime_string
+
+	loadn r0, #320
+    loadn r1, #instrucoes_obj
+    loadn r2, #0         ; Branco
+    call imprime_string
+
+	loadn r0, #560
+    loadn r1, #instrucoes_evt
+    loadn r2, #0         ; Branco
+    call imprime_string
+    
+    ; Aguarda qualquer tecla para voltar
+    call espera_tecla
+    
+    jmp menu_imprimir             ; Volta para o menu
+
+seleciona_opcao3:
+    ; Sair do jogo
+    halt
+
+;---- Funções Auxiliares ----
+limpa_tela:
+    push r0
+    push r1
+    push r2
+    
+    loadn r0, #0         ; Posição inicial
+    loadn r1, #' '       ; Espaço em branco
+    loadn r2, #0         ; Cor
+    
+limpa_loop:
+    outchar r1, r0
+    inc r0
+    loadn r3, #1200      ; Tamanho da tela
+    cmp r0, r3
+    jne limpa_loop
+    
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+imprime_string:
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+    
+    loadn r3, #'\0'      ; Terminador de string
+    
+imprime_loop:
+    loadi r4, r1         ; Carrega caractere da string
+    cmp r4, r3           ; Verifica se é o terminador
+    jeq imprime_fim
+    
+    add r4, r4, r2       ; Aplica cor ao caractere
+    outchar r4, r0       ; Imprime na posição
+    
+    inc r0               ; Próxima posição na tela
+    inc r1               ; Próximo caractere da string
+    jmp imprime_loop
+    
+imprime_fim:
+    pop r4
+    pop r3
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+espera_tecla:
+    push r0
+    push r1
+    
+    aguarda_soltar:  
+        ; Tecla pressionada - aguarda liberação (evita múltiplas leituras)
+        loadn r0, #255
+        inchar r1
+        cmp r1, r0
+        jne aguarda_soltar
+    
     pop r1
     pop r0
     rts
@@ -1795,57 +1796,25 @@ imprime_num_gelos:
     push r6
     push r7
 
-    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
-    loadn r3, #-1
-    push r3
-
     ; r5 recebe o valor da variável 'points' (número a ser impresso)
     load r5, points
+    call empilha_digitos
 
-    ; r7 = 0 (usado como comparação para parar o loop)
-    loadn r7, #0
+    loadn r5, #7              ; posição de início da impressão
+    call imprime_digitos
+    mov r2, r5                ; salva posição após a impressão
 
-    ; r6 = 10 (divisor para separar os dígitos decimais)
-    loadn r6, #10
-
-    ; Loop para extrair os dígitos decimais de 'points' e empilhá-los (em ordem inversa)
-    chars_loop:
-        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
-        push r4           ; salva o dígito na pilha
-        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
-
-        cmp r5, r7        ; se r5 != 0, continua o loop
-        jne chars_loop
-
-    ; r5 = 7 -> posição onde o primeiro caractere será impresso na tela (coluna 7)
-    loadn r5, #7
-
-    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
-    loadn r6, #'0'
-
-    ; retira o primeiro dígito da pilha
-    pop r4
-
-    chars_print:
-        add r7, r6, r4
-        outchar r7, r5
-        inc r5
-
-        pop r4
-        cmp r4, r3
-        jne chars_print
-
-    ;imprime o '/'
-    loadn r7, #47
+    ; imprime o '/'
+    loadn r7, #'/'
     outchar r7, r5
-
     inc r5
-    mov r2, r5 ; r2 guarda o indice de r5
+    mov r2, r5                ; salva próxima posição
 
-    ;agora imprime a pontuação maxima
-    ;nao ligo pra modularizacao HEHEHEHA
-    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
-    
+    ; imprime total_gelos
+    load r5, total_gelos
+    call empilha_digitos
+    mov r5, r2
+    call imprime_digitos
 
     pop r7
     pop r6
@@ -1857,12 +1826,54 @@ imprime_num_gelos:
     rts
 
 
+;-----------------------------------------
+; empilha_digitos
+; Entrada: r5 contém o número a ser empilhado
+; Saída: pilha com dígitos (terminada com -1)
+; Usa: r3, r4, r5, r6, r7
+empilha_digitos:
+    loadn r3, #-1         ; sentinela
+    push r3
+
+    loadn r6, #10         ; divisor decimal
+    loadn r7, #0          ; valor de comparação
+
+    empilha_loop1:
+        mod r4, r5, r6        ; extrai último dígito
+        push r4
+        div r5, r5, r6
+        cmp r5, r7
+        jne empilha_loop1
+
+    rts
+
+;-----------------------------------------
+; imprime_digitos
+; Entrada: pilha com dígitos, r5 = coluna inicial
+; Usa: r3, r4, r6, r7
+imprime_digitos:
+    loadn r6, #'0'        ; para conversão ASCII
+    pop r4
+
+    imprime_loop1:
+        add r7, r6, r4        ; converte para caractere
+        outchar r7, r5
+        inc r5
+
+        pop r4
+        cmp r4, r3
+        jne imprime_loop1
+
+    rts
+
+
+
 delay_clock:
 	push r0
 	push r1
 	push r2
 	
-	loadn r0, #10		; n de loops
+	loadn r0, #100		; n de loops
 	loadn r2, #0
 	
 	delay_loop:
