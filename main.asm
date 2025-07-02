@@ -65,7 +65,7 @@ main:
 ;──────────────────────────────────────────────────────
 le_mov:
 	loadn r1, #0
-	loadn r2, #0
+	loadn r2, #255
 	
 	inchar r1		; r1 = dir | direção lida pelo usuario
 	
@@ -194,73 +194,73 @@ ganhou:
     inc r0
     store nivel_atual, r0 ; Se ganhou, passou de nível
 
-    loadn r1, #2
-    cmp r0, r1
-    jeq nivel2
+    ;loadn r1, #2
+    ;cmp r0, r1
+    ;jeq nivel2
 
-    loadn r1, #3
-    cmp r0, r1
-    jeq nivel3
+    ;loadn r1, #3
+    ;cmp r0, r1
+    ;jeq nivel3
 
     jmp zerou
 
-nivel2:
-    loadn r1, #0
-    store points, r1 ; Reseta os pontos (gelos)
-
-    ; Loadar as variáveis da segunda fase
-    load r1, player_pos2
-    store player_pos, r1
-    load r1, end_pos2
-    store end_pos, r1
-    load r1, total_gelos2
-    store total_gelos, r1
-    load r1, gate_pos2
-    store gate_pos, r1
-    loadn r1, #tile_map2
-    store mapa_atual, r1
-
-    call limpa_tela
-
+;nivel2:
+;    loadn r1, #0
+;    store points, r1 ; Reseta os pontos (gelos)
+;
+;    ; Loadar as variáveis da segunda fase
+;    load r1, player_pos2
+;    store player_pos, r1
+;    load r1, end_pos2
+;    store end_pos, r1
+;    load r1, total_gelos2
+;    store total_gelos, r1
+;    load r1, gate_pos2
+;    store gate_pos, r1
+;    loadn r1, #tile_map2
+;    store mapa_atual, r1
+;
+;    call limpa_tela
+;
     ; Imprime o segundo mapa na tela a partir da posição 80
-    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-    load r1, mapa_atual          ; Endereço do mapa_atual 
-    loadn r2, #256               ; Cor branca
-    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
-    call imprimir_mapa
-    call imprime_pontuacao
+;    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
+;    load r1, mapa_atual          ; Endereço do mapa_atual 
+;    loadn r2, #256               ; Cor branca
+;    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
+;    call imprimir_mapa
+;    call imprime_pontuacao
+;
+;    load r0, player_pos
+;    jmp le_mov
 
-    load r0, player_pos
-    jmp le_mov
-
-nivel3:
-    loadn r1, #0
-    store points, r1 ; Reseta os pontos (gelos)
-
+;nivel3:
+;    loadn r1, #0
+;    store points, r1 ; Reseta os pontos (gelos)
+;
     ; Loadar as variáveis da segunda fase
-    load r1, player_pos3
-    store player_pos, r1
-    load r1, end_pos3
-    store end_pos, r1
-    load r1, total_gelos3
-    store total_gelos, r1
-    load r1, gate_pos3
-    store gate_pos, r1
-    loadn r1, #tile_map3
-    store mapa_atual, r1
-
-    call limpa_tela
-
+;    load r1, player_pos3
+;    store player_pos, r1
+;    load r1, end_pos3
+;    store end_pos, r1
+;    load r1, total_gelos3
+;    store total_gelos, r1
+;    load r1, gate_pos3
+;    store gate_pos, r1
+;    loadn r1, #tile_map3
+;    store mapa_atual, r1
+;
+;    call limpa_tela
+;
     ; Imprime o segundo mapa na tela a partir da posição 80
-    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-    load r1, mapa_atual          ; Endereço do mapa_atual 
-    loadn r2, #256               ; Cor branca
-    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
-    call imprimir_mapa
-    call imprime_pontuacao
-
-    load r0, player_pos
-    jmp le_mov
+;    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
+;    load r1, mapa_atual          ; Endereço do mapa_atual 
+;    loadn r2, #256               ; Cor branca
+;    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
+;    call imprimir_mapa
+;    call imprime_pontuacao
+;
+;    load r0, player_pos
+;    jmp le_mov
 
 zerou:
     halt
@@ -311,6 +311,12 @@ atualiza_chao:
 ;   r0 = r1 = nova posição do player
 ;──────────────────────────────────────────────────────
 movimentar_player:	
+    push r2
+    push r3
+    push r4
+    push r5
+    push r6
+
 	mov r0, r1		; r0 = prox_pos
 	load r6, mapa_atual	; r3 = end(tile_map)
 
@@ -322,6 +328,12 @@ movimentar_player:
 
 	call imprime_pixel
 	call delay_clock
+
+    pop r6
+    pop r5
+    pop r4
+    pop r3
+    pop r2
 
 	rts
 
@@ -338,7 +350,7 @@ atualiza_gelos:
     inc r3
     store #points, r3
 
-    ; call imprime_num_gelos
+    call imprime_num_gelos
 
     pop r3
     pop r2
@@ -394,74 +406,113 @@ imprime_pontuacao:
     pop r5
     pop r3
 
-;imprime_num_gelos:
-;   push r2
-;   push r3
-;   push r4
-;   push r5
-;   push r6
-;   push r7
-;
-;   ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
-;   loadn r3, #-1
-;   push r3
-;
-;   ; r5 recebe o valor da variável 'points' (número a ser impresso)
-;   load r5, points
-;
-;   ; r7 = 0 (usado como comparação para parar o loop)
-;   loadn r7, #0
-;
-;   ; r6 = 10 (divisor para separar os dígitos decimais)
-;   loadn r6, #10
-;
-;   ; Loop para extrair os dígitos decimais de 'points' e empilhá-los (em ordem inversa)
-;   chars_loop:
-;       mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
-;       push r4           ; salva o dígito na pilha
-;       div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
-;
-;       cmp r5, r7        ; se r5 != 0, continua o loop
-;       jne chars_loop
-;
-;   ; r5 = 7 -> posição onde o primeiro caractere será impresso na tela (coluna 7)
-;   loadn r5, #7
-;
-;   ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
-;   loadn r6, #'0'
-;
-;   ; retira o primeiro dígito da pilha
-;   pop r4
-;
-;   chars_print:
-;       add r7, r6, r4
-;       outchar r7, r5
-;       inc r5
-;
-;       pop r4
-;       cmp r4, r3
-;       jne chars_print
-;
-;   ;imprime o '/'
-;   loadn r7, #47
-;   outchar r7, r5
-;
-;   inc r5
-;   mov r2, r5 ; r2 guarda o indice de r5
-;
-;   ;agora imprime a pontuação maxima
-;   ;nao ligo pra modularizacao HEHEHEHA
-;
-;   
-;
-;   pop r7
-;   pop r6
-;   pop r5
-;   pop r4
-;   pop r3
-;   pop r2
-;
-;   rts
+imprime_num_gelos:
+    push r2
+    push r3
+    push r4
+    push r5
+    push r6
+    push r7
+
+    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
+    loadn r3, #-1
+    push r3
+
+    ; r5 recebe o valor da variável 'points' (número a ser impresso)
+    load r5, points
+
+    ; r7 = 0 (usado como comparação para parar o loop)
+    loadn r7, #0
+
+    ; r6 = 10 (divisor para separar os dígitos decimais)
+    loadn r6, #10
+
+    ; Loop para extrair os dígitos decimais de 'points' e empilhá-los (em ordem inversa)
+    chars_loop:
+        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
+        push r4           ; salva o dígito na pilha
+        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
+
+        cmp r5, r7        ; se r5 != 0, continua o loop
+        jne chars_loop
+
+    ; r5 = 7 -> posição onde o primeiro caractere será impresso na tela (coluna 7)
+    loadn r5, #7
+
+    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
+    loadn r6, #'0'
+
+    ; retira o primeiro dígito da pilha
+    pop r4
+
+    chars_print:
+        add r7, r6, r4
+        outchar r7, r5
+        inc r5
+
+        pop r4
+        cmp r4, r3
+        jne chars_print
+
+    ;imprime o '/'
+    loadn r7, #47
+    outchar r7, r5
+
+    inc r5
+    mov r2, r5 ; r2 guarda o indice de r5
+
+    ;agora imprime a pontuação maxima
+    ;nao ligo pra modularizacao HEHEHEHA
+    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
+    loadn r3, #-1
+    push r3
+
+    ; r5 recebe o valor da variável 'total_gelos' (número a ser impresso)
+    load r5, total_gelos
+
+    ; r7 = 0 (usado como comparação para parar o loop)
+    loadn r7, #0
+
+    ; r6 = 10 (divisor para separar os dígitos decimais)
+    loadn r6, #10
+
+    ; Loop para extrair os dígitos decimais de 'total_gelos' e empilhá-los (em ordem inversa)
+    chars_loop1:
+        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
+        push r4           ; salva o dígito na pilha
+        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
+
+        cmp r5, r7        ; se r5 != 0, continua o loop
+        jne chars_loop1
+
+    ; r5 = r2
+    mov r5, r2
+
+    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
+    loadn r6, #'0'
+
+    ; retira o primeiro dígito da pilha
+    pop r4
+
+    chars_print1:
+        add r7, r6, r4
+        outchar r7, r5
+        inc r5
+
+        pop r4
+        cmp r4, r3
+        jne chars_print1
+
+
+    pop r7
+    pop r6
+    pop r5
+    pop r4
+    pop r3
+    pop r2
+
+    rts
+
 
 delay_clock:
 	push r0
@@ -472,13 +523,13 @@ delay_clock:
 	loadn r2, #0
 	
 	delay_loop:
-	loadn r1, #60000	; n de nops (MAX é 2^16 = 65,5 mil)
-	dec r0
-	delay_nop:	; roda (n_loops * n_nops) vezes
-	nop
-	dec r1
-	cmp r1, r2
-	jne delay_nop
+        loadn r1, #60000	; n de nops (MAX é 2^16 = 65,5 mil)
+        dec r0
+        delay_nop:	; roda (n_loops * n_nops) vezes
+        nop
+        dec r1
+        cmp r1, r2
+        jne delay_nop
 	
 	cmp r0, r2
 	jne delay_loop
