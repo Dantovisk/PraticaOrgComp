@@ -94,6 +94,7 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
         f.write("\n\n ; Nível atual\n")
         f.write("nivel_atual: var #1\n")
         f.write("\tstatic nivel_atual + #0, #1\n")
+        f.write("mapa_atual: var #1\n")
         f.write("\n ; Variaveis do Jogo\n")
         f.write("player_pos: var #1\n")
         f.write("end_pos: var #1\n")

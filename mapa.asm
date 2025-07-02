@@ -1146,7 +1146,7 @@ total_gelos2: var #3
 	static total_gelos2 + #1, #'6' ; digito 1
 	static total_gelos2 + #2, #'\0' ; null terminator
 
-; Mapa gerado a partir da imagem mapas/fase2.png
+; Mapa gerado a partir da imagem mapas/fase2semdetalhes.png
 tile_map2 : var #1120
 	static tile_map2 + #0, #'#'
 	static tile_map2 + #1, #'#'
@@ -1485,7 +1485,7 @@ tile_map2 : var #1120
 	static tile_map2 + #334, #'+'
 	static tile_map2 + #335, #' '
 	static tile_map2 + #336, #' '
-	static tile_map2 + #337, #'+'
+	static tile_map2 + #337, #' '
 	static tile_map2 + #338, #' '
 	static tile_map2 + #339, #' '
 	static tile_map2 + #340, #'+'
@@ -1605,7 +1605,7 @@ tile_map2 : var #1120
 	static tile_map2 + #454, #' '
 	static tile_map2 + #455, #' '
 	static tile_map2 + #456, #' '
-	static tile_map2 + #457, #'+'
+	static tile_map2 + #457, #' '
 	static tile_map2 + #458, #' '
 	static tile_map2 + #459, #' '
 	static tile_map2 + #460, #'+'
@@ -3409,6 +3409,7 @@ tile_map3 : var #1120
  ; Nível atual
 nivel_atual: var #1
 	static nivel_atual + #0, #1
+mapa_atual: var #1
 
  ; Variaveis do Jogo
 player_pos: var #1
