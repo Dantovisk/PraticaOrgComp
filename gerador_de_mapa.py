@@ -47,10 +47,6 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
                 # Padrão para cores não mapeadas
                 mapa.append("?")
 
-    # Determina automaticamente o tamanho necessário para total_gelos
-    gelos_str = str(qnt_gelos)
-    tamanho_gelos = len(gelos_str) + 1  # +1 para o null terminator
-
     # Gera o arquivo .asm
     with open(nome_arquivo_saida, "w") as f:
         
@@ -64,11 +60,12 @@ def gerar_mapa_asm(nome_arquivo_entrada, nome_arquivo_saida="mapa.asm"):
         f.write(
             f"\tstatic end_pos + #0, #{pos_end if pos_end is not None else 0} ; posicao do destino no grid\n\n"
         )
-        # Variável total_gelos com tamanho dinâmico
-        f.write(f"total_gelos: var #{tamanho_gelos}\n")
-        for i in range(len(gelos_str)):
-            f.write(f"\tstatic total_gelos + #{i}, #'{gelos_str[i]}' ; digito {i}\n")
-        f.write(f"\tstatic total_gelos + #{len(gelos_str)}, #'\\0' ; null terminator\n\n")
+        
+        # Variável total_gelos
+        f.write("total_gelos: var #1\n")
+        f.write(
+            f"\tstatic total_gelos + #0, #{qnt_gelos if qnt_gelos is not None else 0} ; quantidade de gelos no grid\n\n"
+        )
         # Mapa propriamente dito
         f.write(f"; Mapa gerado a partir da imagem {nome_arquivo_entrada}\n")
         f.write(f"tile_map : var #{len(mapa)}\n")

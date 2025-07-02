@@ -196,11 +196,8 @@ player_pos: var #1
 end_pos: var #1
 	static end_pos + #0, #451 ; posicao do destino no grid
 
-total_gelos: var #4
-	static total_gelos + #0, #'3' ; digito 0
-	static total_gelos + #1, #'5' ; digito 1
-	static total_gelos + #2, #'1' ; digito 2
-	static total_gelos + #3, #'\0' ; null terminator
+total_gelos: var #1
+	static total_gelos + #0, #351 ; quantidade de gelos no grid
 
 ; Mapa gerado a partir da imagem mapa1.png
 tile_map : var #1120
@@ -1559,6 +1556,11 @@ perdeu:
 ;   r0 = posição do chão
 ;──────────────────────────────────────────────────────
 atualiza_chao:
+    push r2
+    push r3
+    push r4
+    push r6
+
     mov r2, r0
     loadn r6, #tile_map	; r6 = end(tile_map)
 	add r6, r6, r2	; r6 = end(tile_map[chao])
@@ -1568,6 +1570,11 @@ atualiza_chao:
     loadn r4, #1024
 
 	call imprime_pixel
+
+    pop r6
+    pop r4
+    pop r3
+    pop r2
     rts
 
 
@@ -1605,12 +1612,17 @@ movimentar_player:
 ; Objetivo: Incrementa a pontuação em 1
 ;──────────────────────────────────────────────────────
 atualiza_gelos:
+    push r2
+    push r3
     loadn r2, #points
     loadi r3, r2
     inc r3
     store #points, r3
 
     call imprime_num_gelos
+
+    pop r3
+    pop r2
     rts
 
 ;──────────────────────────────────────────────────────
@@ -1641,7 +1653,6 @@ imprime_pixel:
 
 imprime_pontuacao:
     push r3
-	push r4
 	push r5
 	push r6
 	push r7
@@ -1662,33 +1673,45 @@ imprime_pontuacao:
     pop r7
     pop r6
     pop r5
-    pop r4
     pop r3
 
 imprime_num_gelos:
+    push r2
     push r3
     push r4
     push r5
     push r6
     push r7
 
+    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
     loadn r3, #-1
     push r3
 
+    ; r5 recebe o valor da variável 'points' (número a ser impresso)
     load r5, points
+
+    ; r7 = 0 (usado como comparação para parar o loop)
     loadn r7, #0
+
+    ; r6 = 10 (divisor para separar os dígitos decimais)
     loadn r6, #10
 
+    ; Loop para extrair os dígitos decimais de 'points' e empilhá-los (em ordem inversa)
     chars_loop:
-        mod r4, r5, r6
-        push r4
-        div r5, r5, r6
+        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
+        push r4           ; salva o dígito na pilha
+        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
 
-        cmp r5, r7
+        cmp r5, r7        ; se r5 != 0, continua o loop
         jne chars_loop
 
+    ; r5 = 7 -> posição onde o primeiro caractere será impresso na tela (coluna 7)
     loadn r5, #7
+
+    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
     loadn r6, #'0'
+
+    ; retira o primeiro dígito da pilha
     pop r4
 
     chars_print:
@@ -1700,33 +1723,64 @@ imprime_num_gelos:
         cmp r4, r3
         jne chars_print
 
+    ;imprime o '/'
     loadn r7, #47
-	outchar r7, r5
+    outchar r7, r5
+
+    inc r5
+    mov r2, r5 ; r2 guarda o indice de r5
 
     ;agora imprime a pontuação maxima
+    ;nao ligo pra modularizacao HEHEHEHA
+
+    ; r3 vai guardar o valor -1 como sentinela para o fim da pilha de dígitos
+    loadn r3, #-1
+    push r3
+
+    ; r5 recebe o valor da variável 'total_gelos' (número a ser impresso)
+    load r5, total_gelos
+
+    ; r7 = 0 (usado como comparação para parar o loop)
+    loadn r7, #0
+
+    ; r6 = 10 (divisor para separar os dígitos decimais)
+    loadn r6, #10
+
+    ; Loop para extrair os dígitos decimais de 'total_gelos' e empilhá-los (em ordem inversa)
+    chars_loop1:
+        mod r4, r5, r6    ; r4 = dígito atual (r5 % 10)
+        push r4           ; salva o dígito na pilha
+        div r5, r5, r6    ; r5 = r5 / 10 (remove o dígito já tratado)
+
+        cmp r5, r7        ; se r5 != 0, continua o loop
+        jne chars_loop1
+
+    ; r5 = r2
+    mov r5, r2
+
+    ; r6 = '0' (código ASCII do caractere 0), usado para converter número -> caractere
+    loadn r6, #'0'
+
+    ; retira o primeiro dígito da pilha
+    pop r4
+
+    chars_print1:
+        add r7, r6, r4
+        outchar r7, r5
+        inc r5
+
+        pop r4
+        cmp r4, r3
+        jne chars_print1
 
     pop r7
     pop r6
     pop r5
     pop r4
     pop r3
+    pop r2
 
     rts
-
-print_loop:
-    add r7, r4, r5   ; r7 = caractere ASCII
-    outchar r7, r6
-    inc r6
-    pop r5
-    cmp r5, r3
-    jne print_loop
-
-    pop r7
-    pop r6
-    pop r4
-    pop r3
-    rts
-
 
 delay_clock:
 	push r0

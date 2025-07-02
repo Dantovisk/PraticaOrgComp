@@ -4,11 +4,8 @@ player_pos: var #1
 end_pos: var #1
 	static end_pos + #0, #451 ; posicao do destino no grid
 
-total_gelos: var #4
-	static total_gelos + #0, #'3' ; digito 0
-	static total_gelos + #1, #'5' ; digito 1
-	static total_gelos + #2, #'1' ; digito 2
-	static total_gelos + #3, #'\0' ; null terminator
+total_gelos: var #1
+	static total_gelos + #0, #351 ; quantidade de gelos no grid
 
 ; Mapa gerado a partir da imagem mapa1.png
 tile_map : var #1120
