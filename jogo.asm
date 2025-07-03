@@ -3408,6 +3408,7 @@ tile_map2 : var #1120
 	static tile_map2 + #1117, #'#'
 	static tile_map2 + #1118, #'#'
 	static tile_map2 + #1119, #'#'
+
 tile_map_real2 : var #1120
 	static tile_map_real2 + #0, #'#'
 	static tile_map_real2 + #1, #'#'
@@ -5661,6 +5662,7 @@ tile_map3 : var #1120
 	static tile_map3 + #1117, #'#'
 	static tile_map3 + #1118, #'#'
 	static tile_map3 + #1119, #'#'
+
 tile_map_real3 : var #1120
 	static tile_map_real3 + #0, #'#'
 	static tile_map_real3 + #1, #'#'
@@ -6842,6 +6844,7 @@ imprimir_mapa:
     push r3
     push r4   ; contador de posições (posição na tela)
     push r5   ; caractere atual com cor
+    push r6   ; caracter para comparacao
 
     mov r4, r0  ; Inicializa o contador de posições na tela (r4)
 
@@ -6849,9 +6852,58 @@ imprimir_mapa_loop:
     cmp r4, r3          ; Verifica se todos os caracteres foram impressos
     jeq imprimir_mapa_fim
 
-    ; Aqui falta fazer uma cor personalizada para cada char
-
     loadi r5, r1        ; Carrega o caractere do mapa (mem[r1] → r5)
+
+    ; ' ' -> gelo  (branco)
+    ; '.' -> agua  (azul)
+    ; '#' -> parede  (aqua)
+    ; '@' -> player  (verde)
+    ; '/' -> portao  (marrom)
+    ; '*' -> chave  (amarelo)
+    ; '+' -> gelo_duplo  (cinza)
+    ; 'E' -> saida  (veremlho)
+
+    loadn r6, #' '
+    loadn r2, #0
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'.'
+    loadn r2, #3072
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'#'
+    loadn r2, #3584
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'@'
+    loadn r2, #2304
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'/'
+    loadn r2, #256
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'*'
+    loadn r2, #2816
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'+'
+    loadn r2, #2048
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'E'
+    loadn r2, #512
+
+
+    imprime_com_cor:
+
     add r5, r5, r2      ; Aplica a cor ao caractere (r5 = caractere + cor)
     outchar r5, r4      ; Imprime na posição r4 da tela
 
@@ -6861,6 +6913,7 @@ imprimir_mapa_loop:
 
 imprimir_mapa_fim:
     ; Restaura os registradores na ordem inversa
+    pop r6
     pop r5
     pop r4
     pop r3
@@ -8285,6 +8338,7 @@ main:
     ; Imprime o menu
     call menu
 
+    loadn r0, #0
    jmp prox_nivel
    ;; Loadar as variáveis da primeira fase
    ;load r0, player_pos1
@@ -8328,7 +8382,6 @@ le_mov:
     inchar r1       ; r1 = dir | direção lida pelo usuario
     cmp r1, r2      ; nao leu nada -> loop pra ler denovo
     jeq le_mov
-
 
 
 ; r1 = direção lida
@@ -8586,7 +8639,7 @@ abrir_portao:
     loadn r3, #' '
     storei r5, r3
 
-    loadn r4, #1024
+    loadn r4, #0
     call imprime_pixel
 
     pop r5
@@ -8621,7 +8674,7 @@ atualiza_chao:
 
     loadn r3, #'.'  ; r3 <- caractere que representa água ('.')
     storei r6, r3   ; Atualiza o mapa: coloca água na posição (tile_map[pos] <- '.')
-    loadn r4, #1024 ; r4 <- cor azul (código 1024) para imprimir pixel
+    loadn r4, #3072 ; r4 <- cor azul (código 3072) para imprimir pixel
 
     call imprime_pixel     ; Chama rotina que desenha o pixel atualizado
     jmp fim_atualiza_chao  ; Vai para o final da rotina
@@ -8630,7 +8683,7 @@ atualiza_gelo_duplo:
     call atualiza_gelo_duplo_falso ; Chama rotina específica para gelo duplo
     loadn r3, #' '     ; r3 <- espaço em branco (gelo duplo vira vazio)
     storei r6, r3      ; Atualiza o mapa: remove gelo duplo
-    loadn r4, #1024    ; r4 <- cor azul para desenhar pixel
+    loadn r4, #0   ; r4 <- cor branca para desenhar pixel
 
     call imprime_pixel ; Desenha o novo pixel correspondente ao espaço
 
@@ -8696,7 +8749,7 @@ movimentar_player:
     loadn r3, #'@'
     add r6, r6, r2  ; r6 = end(tile_map[prox_pos])
     storei r6, r3   ; Atualiza o tile_map
-    loadn r4, #512
+    loadn r4, #2304
 
     call imprime_pixel
     call delay_clock
@@ -8744,8 +8797,8 @@ imprime_pixel:
     push r5
     
     loadn r5, #80
-    add r2, r2, r5
-    add r3, r3, r4
+    add r2, r2, r5  ; atualiza a posicao 
+    add r3, r3, r4  ; adiciona a cor
     outchar r3, r2  
 
     pop r5

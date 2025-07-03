@@ -46,6 +46,7 @@ imprimir_mapa:
     push r3
     push r4   ; contador de posições (posição na tela)
     push r5   ; caractere atual com cor
+    push r6   ; caracter para comparacao
 
     mov r4, r0  ; Inicializa o contador de posições na tela (r4)
 
@@ -53,9 +54,58 @@ imprimir_mapa_loop:
     cmp r4, r3          ; Verifica se todos os caracteres foram impressos
     jeq imprimir_mapa_fim
 
-    ; Aqui falta fazer uma cor personalizada para cada char
-
     loadi r5, r1        ; Carrega o caractere do mapa (mem[r1] → r5)
+
+    ; ' ' -> gelo  (branco)
+    ; '.' -> agua  (azul)
+    ; '#' -> parede  (aqua)
+    ; '@' -> player  (verde)
+    ; '/' -> portao  (marrom)
+    ; '*' -> chave  (amarelo)
+    ; '+' -> gelo_duplo  (cinza)
+    ; 'E' -> saida  (veremlho)
+
+    loadn r6, #' '
+    loadn r2, #0
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'.'
+    loadn r2, #3072
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'#'
+    loadn r2, #3584
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'@'
+    loadn r2, #2304
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'/'
+    loadn r2, #256
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'*'
+    loadn r2, #2816
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'+'
+    loadn r2, #2048
+    cmp r5, r2
+    jeq imprime_com_cor
+
+    loadn r6, #'E'
+    loadn r2, #512
+
+
+    imprime_com_cor:
+
     add r5, r5, r2      ; Aplica a cor ao caractere (r5 = caractere + cor)
     outchar r5, r4      ; Imprime na posição r4 da tela
 
@@ -65,6 +115,7 @@ imprimir_mapa_loop:
 
 imprimir_mapa_fim:
     ; Restaura os registradores na ordem inversa
+    pop r6
     pop r5
     pop r4
     pop r3

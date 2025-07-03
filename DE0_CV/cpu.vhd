@@ -436,17 +436,14 @@ begin
 			IF(IR(15 DOWNTO 14) = ARITH AND IR(13 DOWNTO 10) /= INC) THEN
 				M3 := REG(RY);
 				M4 := REG(RZ);
-				X <= M3; 		-- Define as entradas da ULA
-				Y <= M4;
-				
-				OP(5 DOWNTO 4) <= ARITH;
-				OP(3 DOWNTO 0) <= IR(13 DOWNTO 10); -- Define a operação na ULA
-				OP(6) <= IR(0); -- Define se vai haver carry ou não
-				
+				X <= M3;
+				y <= M4;
+				OP(6)<=IR(0);
+				OP(5 downto 0) <= IR(15 downto 10);
 				selM2 := sULA;
 				LoadReg(RX) := '1';
 				selM6 := sULA;
-				LoadFR := '1';
+				LoadFR := '1';	
 				
 				state := fetch;
 			END IF;
@@ -483,21 +480,17 @@ begin
 			IF(IR(15 DOWNTO 14) = LOGIC AND IR(13 DOWNTO 10) /= SHIFT AND IR(13 DOWNTO 10) /= CMP) THEN 
 				M3 := REG(RY);
 				M4 := REG(RZ);
-				X <= M3; 		-- Define as entradas da ULA
-				Y <= M4;
-				
-				OP(5 DOWNTO 4) <= LOGIC;
-				OP(3 DOWNTO 0) <= IR(13 DOWNTO 10); -- Define a operação na ULA
-				OP(6) <= IR(0); -- Define se vai haver carry ou não
-				
+				X <= M3;
+				y <= M4;
+				OP(6)<=IR(0);
+				OP(5 downto 0) <= IR(15 downto 10);
 				selM2 := sULA;
 				LoadReg(RX) := '1';
 				selM6 := sULA;
-				LoadFR := '1';
-				
+				LoadFR := '1';	
+
 				state := fetch;
 			END IF;			
-		
 
 --========================================================================
 -- SHIFT		RX, RY     RX  <- SHIFT[ RY]        ROTATE INCluded !
@@ -518,7 +511,7 @@ begin
 				end if;	
 				
 				state := fetch;
-			end if;			
+			end if;		
 	
 
 --========================================================================
@@ -534,7 +527,6 @@ begin
 				OP(3 DOWNTO 0) <= CMP; -- Define a operação na ULA
 				OP(6) <= IR(0); -- Define se vai haver carry ou não
 				
-				selM2 := sULA;
 				selM6 := sULA;
 				LoadFR := '1';
 
@@ -707,11 +699,10 @@ begin
 -- EXEC STORE DIReto 			M[END] <- RX
 --========================================================================
 			IF(IR(15 DOWNTO 10) = STORE) THEN 
-				M1 <= MAR;
 				RW <= '1';
 				M3 := REG(RX);
+				M1 <= MAR;
 				M5 <= M3;
-				
 				state := fetch;
 			END IF;
 						
@@ -741,7 +732,7 @@ begin
 --========================================================================
 			IF(IR(15 DOWNTO 10) = POP) THEN
 				M1 <= SP;
-				RW <= '1';
+				RW <= '0';
 				IF(IR(6)='0') THEN
 					SelM2 := sMEM;
 					LoadReg(RX) := '1';
