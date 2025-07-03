@@ -190,77 +190,60 @@ perdeu: ; Adicionar tela de derrota talvez
     halt
 
 ganhou:
-    load r0, nivel_atual
+    loadn r0, #nivel_atual
     inc r0
     store nivel_atual, r0 ; Se ganhou, passou de nível
 
-    ;loadn r1, #2
-    ;cmp r0, r1
-    ;jeq nivel2
+    loadn r1, #qnt_niveis
+    cmp r0, r1
+    jeq zerou
 
-    ;loadn r1, #3
-    ;cmp r0, r1
-    ;jeq nivel3
 
-    jmp zerou
 
-;nivel2:
-;    loadn r1, #0
-;    store points, r1 ; Reseta os pontos (gelos)
-;
-;    ; Loadar as variáveis da segunda fase
-;    load r1, player_pos2
-;    store player_pos, r1
-;    load r1, end_pos2
-;    store end_pos, r1
-;    load r1, total_gelos2
-;    store total_gelos, r1
-;    load r1, gate_pos2
-;    store gate_pos, r1
-;    loadn r1, #tile_map2
-;    store mapa_atual, r1
-;
-;    call limpa_tela
-;
-    ; Imprime o segundo mapa na tela a partir da posição 80
-;    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-;    load r1, mapa_atual          ; Endereço do mapa_atual 
-;    loadn r2, #256               ; Cor branca
-;    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
-;    call imprimir_mapa
-;    call imprime_pontuacao
-;
-;    load r0, player_pos
-;    jmp le_mov
+prox_nivel:
+    loadn r1, #0
+    store points, r1 ; Reseta os pontos (gelos)
 
-;nivel3:
-;    loadn r1, #0
-;    store points, r1 ; Reseta os pontos (gelos)
-;
-    ; Loadar as variáveis da segunda fase
-;    load r1, player_pos3
-;    store player_pos, r1
-;    load r1, end_pos3
-;    store end_pos, r1
-;    load r1, total_gelos3
-;    store total_gelos, r1
-;    load r1, gate_pos3
-;    store gate_pos, r1
-;    loadn r1, #tile_map3
-;    store mapa_atual, r1
-;
-;    call limpa_tela
-;
-    ; Imprime o segundo mapa na tela a partir da posição 80
-;    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-;    load r1, mapa_atual          ; Endereço do mapa_atual 
-;    loadn r2, #256               ; Cor branca
-;    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
-;    call imprimir_mapa
-;    call imprime_pontuacao
-;
-;    load r0, player_pos
-;    jmp le_mov
+    loadn r1, #player_pos
+    add r1, r1, r0 ; r0 é o nivel atual
+    store player_pos_atual, r1
+
+    loadn r1, #end_pos
+    add r1, r1, r0
+    store end_pos_atual, r1
+
+    loadn r1, #gate_pos
+    add r1, r1, r0
+    store gate_pos_atual, r1
+
+    loadn r1, #total_gelos_atual
+    add r1, r1, r0
+    store total_gelos_atual, r1
+    ; Loadar as variáveis da proxima fase
+    load r1, player_pos2
+    store player_pos, r1
+    load r1, end_pos2
+    store end_pos, r1
+    load r1, total_gelos2
+    store total_gelos, r1
+    load r1, gate_pos2
+    store gate_pos, r1
+    loadn r1, #tile_map2
+    store mapa_atual, r1
+
+    call limpa_tela
+
+   ; Imprime o segundo mapa na tela a partir da posição 80
+    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
+    load r1, mapa_atual          ; Endereço do mapa_atual 
+    loadn r2, #256               ; Cor branca
+    loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
+    call imprimir_mapa
+    call imprime_pontuacao
+
+    load r0, player_pos
+    jmp le_mov
+
 
 zerou:
     halt
