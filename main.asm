@@ -35,6 +35,7 @@ main:
     ; Imprime o menu
     call menu
 
+    loadn r0, #0
    jmp prox_nivel
    ;; Loadar as variáveis da primeira fase
    ;load r0, player_pos1
@@ -335,7 +336,7 @@ abrir_portao:
     loadn r3, #' '
     storei r5, r3
 
-    loadn r4, #1024
+    loadn r4, #0
     call imprime_pixel
 
     pop r5
@@ -370,7 +371,7 @@ atualiza_chao:
 
     loadn r3, #'.'  ; r3 <- caractere que representa água ('.')
     storei r6, r3   ; Atualiza o mapa: coloca água na posição (tile_map[pos] <- '.')
-    loadn r4, #1024 ; r4 <- cor azul (código 1024) para imprimir pixel
+    loadn r4, #3072 ; r4 <- cor azul (código 3072) para imprimir pixel
 
     call imprime_pixel     ; Chama rotina que desenha o pixel atualizado
     jmp fim_atualiza_chao  ; Vai para o final da rotina
@@ -379,7 +380,7 @@ atualiza_gelo_duplo:
     call atualiza_gelo_duplo_falso ; Chama rotina específica para gelo duplo
     loadn r3, #' '     ; r3 <- espaço em branco (gelo duplo vira vazio)
     storei r6, r3      ; Atualiza o mapa: remove gelo duplo
-    loadn r4, #1024    ; r4 <- cor azul para desenhar pixel
+    loadn r4, #0   ; r4 <- cor branca para desenhar pixel
 
     call imprime_pixel ; Desenha o novo pixel correspondente ao espaço
 
@@ -445,7 +446,7 @@ movimentar_player:
     loadn r3, #'@'
     add r6, r6, r2  ; r6 = end(tile_map[prox_pos])
     storei r6, r3   ; Atualiza o tile_map
-    loadn r4, #512
+    loadn r4, #2304
 
     call imprime_pixel
     call delay_clock
@@ -493,8 +494,8 @@ imprime_pixel:
     push r5
     
     loadn r5, #80
-    add r2, r2, r5
-    add r3, r3, r4
+    add r2, r2, r5  ; atualiza a posicao 
+    add r3, r3, r4  ; adiciona a cor
     outchar r3, r2  
 
     pop r5
