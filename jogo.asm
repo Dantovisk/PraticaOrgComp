@@ -3435,24 +3435,24 @@ qnt_niveis: var #1
  ; Variaveis do Jogo
 player_pos_atual: var #1
 player_pos: var #3
-	static player_pos + #0, player_pos1
-	static player_pos + #1, player_pos2
-	static player_pos + #2, player_pos3
+	static player_pos + #0, #player_pos1
+	static player_pos + #1, #player_pos2
+	static player_pos + #2, #player_pos3
 end_pos_atual: var #1
 end_pos: var #3
-	static end_pos + #0, end_pos1
-	static end_pos + #1, end_pos2
-	static end_pos + #2, end_pos3
+	static end_pos + #0, #end_pos1
+	static end_pos + #1, #end_pos2
+	static end_pos + #2, #end_pos3
 gate_pos_atual: var #1
 gate_pos: var #3
-	static gate_pos + #0, gate_pos1
-	static gate_pos + #1, gate_pos2
-	static gate_pos + #2, gate_pos3
+	static gate_pos + #0, #gate_pos1
+	static gate_pos + #1, #gate_pos2
+	static gate_pos + #2, #gate_pos3
 total_gelos_atual: var #1
 total_gelos: var #3
-	static total_gelos + #0, total_gelos1
-	static total_gelos + #1, total_gelos2
-	static total_gelos + #2, total_gelos3
+	static total_gelos + #0, #total_gelos1
+	static total_gelos + #1, #total_gelos2
+	static total_gelos + #2, #total_gelos3
 pos_gelo_duplo: var #1
 static pos_gelo_duplo + #0, #0
 ;---- Variáveis ----
@@ -4911,6 +4911,12 @@ speed : var #2
 static speed + #0, #40      ; velocidade vertical   (subindo || descendo)
 static speed + #1, #1       ; velocidade horizontal (esquerda || direita)
 
+
+; Variaveis da tela de perder
+perdeu_texto: string "============= VOCE PERDEU =============="
+vo_primeiro: string "         VOCE E PIOR QUE MINHA          " 
+vo_segundo: string "          VO CEGA MEU DEUS EM           "
+
 ;---- Inicio do Programa Principal -----
 main:
     ; Imprime o menu
@@ -5094,6 +5100,29 @@ fim_jogo:
     jeq ganhou ; Se estado for 1, quer dizer que ganhou 🥳🥳
 
 perdeu: ; Adicionar tela de derrota talvez
+    call limpa_tela
+    
+    ; Imprime texto de derrota
+    loadn r0, #40        ; Posição centralizada
+    loadn r1, #perdeu_texto    ; Endereço do texto
+    loadn r2, #2816      ; Cor amarela
+    call imprime_string
+    
+    ; Imprime opções do menu
+    loadn r0, #520       ; Posição das opções
+    loadn r1, #vo_primeiro
+    loadn r2, #0         ; Cor branca
+    call imprime_string
+    
+    loadn r0, #560
+    loadn r1, #vo_segundo
+    call imprime_string
+
+    loadn r0, #1120        ; Posição centralizada
+    loadn r1, #perdeu_texto    ; Endereço do texto
+    loadn r2, #2816      ; Cor amarela
+    call imprime_string
+
     halt
 
 ganhou:

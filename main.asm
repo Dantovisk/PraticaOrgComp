@@ -24,6 +24,12 @@ speed : var #2
 static speed + #0, #40      ; velocidade vertical   (subindo || descendo)
 static speed + #1, #1       ; velocidade horizontal (esquerda || direita)
 
+
+; Variaveis da tela de perder
+perdeu_texto: string "============= VOCE PERDEU =============="
+vo_primeiro: string "         VOCE E PIOR QUE MINHA          " 
+vo_segundo: string "          VO CEGA MEU DEUS EM           "
+
 ;---- Inicio do Programa Principal -----
 main:
     ; Imprime o menu
@@ -207,6 +213,29 @@ fim_jogo:
     jeq ganhou ; Se estado for 1, quer dizer que ganhou 🥳🥳
 
 perdeu: ; Adicionar tela de derrota talvez
+    call limpa_tela
+    
+    ; Imprime texto de derrota
+    loadn r0, #40        ; Posição centralizada
+    loadn r1, #perdeu_texto    ; Endereço do texto
+    loadn r2, #2816      ; Cor amarela
+    call imprime_string
+    
+    ; Imprime opções do menu
+    loadn r0, #520       ; Posição das opções
+    loadn r1, #vo_primeiro
+    loadn r2, #0         ; Cor branca
+    call imprime_string
+    
+    loadn r0, #560
+    loadn r1, #vo_segundo
+    call imprime_string
+
+    loadn r0, #1120        ; Posição centralizada
+    loadn r1, #perdeu_texto    ; Endereço do texto
+    loadn r2, #2816      ; Cor amarela
+    call imprime_string
+
     halt
 
 ganhou:
