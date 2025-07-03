@@ -73,11 +73,12 @@ main:
 ;──────────────────────────────────────────────────────
 le_mov:
     loadn r1, #0
-    loadn r2, #0
+    loadn r2, #255
 
     inchar r1       ; r1 = dir | direção lida pelo usuario
     cmp r1, r2      ; nao leu nada -> loop pra ler denovo
     jeq le_mov
+
 
 
 ; r1 = direção lida

@@ -86,6 +86,9 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
             f.write(f"tile_map{i+1} : var #{len(mapa)}\n")
             for j in range(len(mapa)):
                 f.write(f"\tstatic tile_map{i+1} + #{j}, #'{mapa[j]}'\n")
+            f.write(f"tile_map_real{i+1} : var #{len(mapa)}\n")
+            for j in range(len(mapa)):
+                f.write(f"\tstatic tile_map_real{i+1} + #{j}, #'{mapa[j]}'\n")
 
     with open(nome_arquivo_saida, "a") as f:
         # Variáveis controle nível
