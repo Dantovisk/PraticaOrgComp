@@ -3408,7 +3408,6 @@ tile_map2 : var #1120
 	static tile_map2 + #1117, #'#'
 	static tile_map2 + #1118, #'#'
 	static tile_map2 + #1119, #'#'
-
 tile_map_real2 : var #1120
 	static tile_map_real2 + #0, #'#'
 	static tile_map_real2 + #1, #'#'
@@ -5662,7 +5661,6 @@ tile_map3 : var #1120
 	static tile_map3 + #1117, #'#'
 	static tile_map3 + #1118, #'#'
 	static tile_map3 + #1119, #'#'
-
 tile_map_real3 : var #1120
 	static tile_map_real3 + #0, #'#'
 	static tile_map_real3 + #1, #'#'
@@ -8388,6 +8386,7 @@ le_mov2:
     jne le_mov2
 
 
+
 ; r1 = direção lida
 checa_movimento:
     ; ────────────┤ Checagem de movimento vertical ├────────────
@@ -8895,7 +8894,6 @@ imprime_numero:
 
     loadn r2, #10        ; Divisor
     loadn r3, #0         ; Para comparação
-    loadn r5, #'0'       ; Base ASCII
     loadn r6, #48        ; Offset para conversão
     loadn r7, #0         ; Contador de dígitos
 
@@ -8904,6 +8902,7 @@ imprime_numero:
     jne imprime_numero_loop
     loadn r4, #'0'
     outchar r4, r1
+    inc r1
     jmp imprime_numero_fim
 
 imprime_numero_loop:

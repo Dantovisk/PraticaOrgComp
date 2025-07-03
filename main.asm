@@ -593,7 +593,6 @@ imprime_numero:
 
     loadn r2, #10        ; Divisor
     loadn r3, #0         ; Para comparação
-    loadn r5, #'0'       ; Base ASCII
     loadn r6, #48        ; Offset para conversão
     loadn r7, #0         ; Contador de dígitos
 
@@ -602,6 +601,7 @@ imprime_numero:
     jne imprime_numero_loop
     loadn r4, #'0'
     outchar r4, r1
+    inc r1
     jmp imprime_numero_fim
 
 imprime_numero_loop:
