@@ -101,19 +101,19 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
         f.write("player_pos_atual: var #1\n")
         f.write(f"player_pos: var #{qnt_arquivos}\n")
         for i in range(qnt_arquivos):
-            f.write(f"\tstatic player_pos + #{i}, player_pos{i+1}\n")
+            f.write(f"\tstatic player_pos + #{i}, #player_pos{i+1}\n")
         f.write("end_pos_atual: var #1\n")
         f.write(f"end_pos: var #{qnt_arquivos}\n")
         for i in range(qnt_arquivos):
-            f.write(f"\tstatic end_pos + #{i}, end_pos{i+1}\n")
+            f.write(f"\tstatic end_pos + #{i}, #end_pos{i+1}\n")
         f.write("gate_pos_atual: var #1\n")
         f.write(f"gate_pos: var #{qnt_arquivos}\n")
         for i in range(qnt_arquivos):
-            f.write(f"\tstatic gate_pos + #{i}, gate_pos{i+1}\n")
+            f.write(f"\tstatic gate_pos + #{i}, #gate_pos{i+1}\n")
         f.write("total_gelos_atual: var #1\n")
         f.write(f"total_gelos: var #{qnt_arquivos}\n")
         for i in range(qnt_arquivos):
-            f.write(f"\tstatic total_gelos + #{i}, total_gelos{i+1}\n")
+            f.write(f"\tstatic total_gelos + #{i}, #total_gelos{i+1}\n")
         f.write("pos_gelo_duplo: var #1\n")
         f.write("static pos_gelo_duplo + #0, #0")
 
