@@ -31,8 +31,22 @@ Após ter os mapas desenhados, e possível gerar o código em assembly com todos
 
 ### Como montar o jogo
 Criamos uma ferramenta que permite usar #include {nome do arquivo} no código, para modularizarmos o nosso programa.
-Para montar um jogo finalizado, basta rodar 'python montaJogo.py main.asm jogo.asm'.
+Para montar um jogo finalizado, basta rodar: 
+´´´
+python montaJogo.py main.asm jogo.asm
+´´´
 Após isso, pode-se usar o montador do simulador para gerar um 'cpuram.mif', que será o código colocado na placa FPGA.
+
+### Como criar sprites
+Caso queira alterar um sprite do jogo, basta criar uma pixel art 8x8 e salvar em um arquivo png.
+Então pode-se rodar: 
+´´´
+python png_to_mif.py {nome do arquivo de imagem} {caracter a ser sibstituido}
+´´´
+E o programa imprimirá no terminal o trecho de código que deve-se substituir no charmap.mif.
+
+## Vídeo explicativo do jogo
+
 
 ## Alunos
 - Dante Brito Lourenço - 15447326
