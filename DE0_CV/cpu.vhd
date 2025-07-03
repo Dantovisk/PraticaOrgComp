@@ -74,6 +74,7 @@ ARCHITECTURE main of cpu is
 	CONSTANT LOR			: STD_LOGIC_VECTOR(3 downto 0) := "0011";		-- OR RX RY RZ   	-- RZ <- RX OR RY		Format: < inst(6) | RX(3) | RY(3) | RZ(3)| x >
 	CONSTANT LXOR			: STD_LOGIC_VECTOR(3 downto 0) := "0100"; 	-- XOR RX RY RZ  	-- RZ <- RX XOR RY	Format: < inst(6) | RX(3) | RY(3) | RZ(3)| x >
 	CONSTANT LNOT			: STD_LOGIC_VECTOR(3 downto 0) := "0101";		-- NOT RX RY       	-- RX <- NOT(RY)		Format: < inst(6) | RX(3) | RY(3) | xxxx >
+	CONSTANT LNAND			: STD_LOGIC_VECTOR(3 downto 0) := "0001"; 	-- NAND RX RY RZ  	-- RZ <- RX NAND RY	Format: < inst(6) | RX(3) | RY(3) | RZ(3)| x >
 	CONSTANT SHIFT			: STD_LOGIC_VECTOR(3 downto 0) := "0000";		-- SHIFTL0 RX,n / SHIFTL1 RX,n / SHIFTR0 RX,n / SHIFTR1 RX,n / ROTL RX,n / ROTR RX,n
 																							-- SHIFT/Rotate RX	-- b6=shif/rotate: 0/1  b5=left/right: 0/1; b4=fill; 	
 																							-- Format: < inst(6) | RX(3) |  b6 b5 b4 | nnnn >
@@ -888,6 +889,8 @@ BEGIN
 					WHEN LOR =>	 result <= x or y;
 
 					WHEN LNOT => result <= not x;
+					
+					WHEN LNAND => result <= x nand y;
 
 					WHEN others =>   -- invalid operation, defaults to nothing
 						RESULT <= X;

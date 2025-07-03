@@ -32,11 +32,11 @@
 			"buffers":
 			[
 				{
-					"file": "/Z/home/pedro-prestes/Downloads/USP/Semestre 3/PratOrgComp/Simulador/jogo.asm",
+					"file": "/C/Users/15507819/Downloads/processador/Simulador/jogo.asm",
 					"settings":
 					{
-						"buffer_size": 53752,
-						"line_ending": "Unix"
+						"buffer_size": 53751,
+						"line_ending": "Windows"
 					}
 				}
 			],
@@ -72,6 +72,7 @@
 			},
 			"file_history":
 			[
+				"/Z/home/pedro-prestes/Downloads/USP/Semestre 3/PratOrgComp/Simulador/jogo.asm",
 				"/V/projetos/trab_simas_cpu/Simulador/Hello4.asm",
 				"/C/Users/frato/Downloads/Simulador_Windows_Tudo_Pronto_Fácil (1)/Simulador/Hello4.asm",
 				"/D/Simulador/Hello4.asm",
@@ -98,7 +99,7 @@
 			],
 			"find":
 			{
-				"height": 25.0
+				"height": 26.0
 			},
 			"find_in_files":
 			{
@@ -140,19 +141,19 @@
 					[
 						{
 							"buffer": 0,
-							"file": "/Z/home/pedro-prestes/Downloads/USP/Semestre 3/PratOrgComp/Simulador/jogo.asm",
+							"file": "/C/Users/15507819/Downloads/processador/Simulador/jogo.asm",
 							"semi_transient": false,
 							"settings":
 							{
-								"buffer_size": 53752,
+								"buffer_size": 53751,
 								"regions":
 								{
 								},
 								"selection":
 								[
 									[
-										0,
-										0
+										51141,
+										51141
 									]
 								],
 								"settings":
@@ -161,7 +162,7 @@
 									"translate_tabs_to_spaces": false
 								},
 								"translation.x": 0.0,
-								"translation.y": 0.0,
+								"translation.y": 32436.0,
 								"zoom_level": 1.0
 							},
 							"stack_index": 0,
@@ -172,7 +173,7 @@
 			],
 			"incremental_find":
 			{
-				"height": 25.0
+				"height": 26.0
 			},
 			"input":
 			{
@@ -209,11 +210,11 @@
 			{
 				"height": 0.0
 			},
-			"position": "0,0,1,-1,-1,633,9,760,966,221,1622",
+			"position": "0,0,1,-1,-1,-1,-1,760,966,221,1622",
 			"project": "",
 			"replace":
 			{
-				"height": 46.0
+				"height": 48.0
 			},
 			"save_all_on_build": true,
 			"select_file":

@@ -1157,7 +1157,7 @@ tile_map1 : var #1120
 	static tile_map1 + #1119, #'#'
 
 
- ; Nível atual
+ ; N?el atual
 nivel_atual: var #1
 	static nivel_atual + #0, #1
 mapa_atual: var #1
@@ -1787,7 +1787,7 @@ imprime_pontuacao:
     push r6
     push r7
 
-    loadn r5, points_string
+    load r5, points_string
     load r6, points_pos
     loadn r7, #'\0'
 
