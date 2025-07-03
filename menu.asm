@@ -23,7 +23,7 @@ menu:
 menu_imprimir:  
     call limpa_tela
     
-    ; Imprime título do jogo
+    ; Imprime titulo do jogo
     loadn r0, #40        ; Posição centralizada
     loadn r1, #titulo    ; Endereço do texto
     loadn r2, #2816      ; Cor amarela
