@@ -6,7 +6,9 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
         with open(nome_arquivo_saida, "x+") as f:
             pass
     except FileExistsError:
-        decisao = int(input("Deseja limpar o arquivo existente? (1 para sim): ").strip())
+        decisao = int(
+            input("Deseja limpar o arquivo existente? (1 para sim): ").strip()
+        )
         if decisao == 1:
             with open(nome_arquivo_saida, "w") as f:
                 pass
@@ -19,7 +21,7 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
         mapa = []
         pos_start = None  # Posição do 'S' (start)
         pos_end = None  # Posição do 'E' (end)
-        pos_gate = None # Posição do '/' (gate)
+        pos_gate = None  # Posição do 'Z' (gate)
         qnt_gelos = 0  # Quantidade de gelos para score
 
         # Processa cada pixel da imagem
@@ -39,9 +41,9 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
                 elif r > 200 and g > 200 and b > 200:
                     mapa.append(" ")
                     qnt_gelos += 1
-                # Rosa - '/' - portao
+                # Rosa - 'Z' - portao
                 elif r > 200 and g > 100 and b > 100:
-                    mapa.append("/")
+                    mapa.append("Z")
                     pos_gate = index
                 # Amarelo - '*' (considerando R e G altos, B baixo) - chave
                 elif r > 200 and g > 190 and b < 100:
@@ -71,11 +73,13 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
                 f"\tstatic end_pos{i+1} + #0, #{pos_end if pos_end is not None else 0} ; posicao do destino no grid\n\n"
             )
             f.write(f"gate_pos{i+1}: var #1\n")
-            f.write(f"\tstatic gate_pos{i+1} + #0, #{pos_gate if pos_gate is not None else 0} ; posicao do portao no grid\n\n") 
+            f.write(
+                f"\tstatic gate_pos{i+1} + #0, #{pos_gate if pos_gate is not None else 0} ; posicao do portao no grid\n\n"
+            )
             # Variável total_gelos com tamanho dinâmico
             f.write(f"total_gelos{i+1}: var #1\n")
             f.write(f"\tstatic total_gelos{i+1} + #0, #{qnt_gelos} ; \n")
-            
+
             # Mapa propriamente dito
             f.write(f"; Mapa gerado a partir da imagem {arquivos_entrada[i]}\n")
             f.write(f"tile_map{i+1} : var #{len(mapa)}\n")
@@ -84,15 +88,31 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
 
     with open(nome_arquivo_saida, "a") as f:
         # Variáveis controle nível
-        f.write("\n\n ; Nível atual\n")
+        f.write("\n\n ; Nivel atual\n")
         f.write("nivel_atual: var #1\n")
-        f.write("\tstatic nivel_atual + #0, #1\n")
-        f.write("mapa_atual: var #1\n")
+        f.write("\tstatic nivel_atual + #0, #0\n")
+        f.write(f"mapa_atual: var #{qnt_arquivos}\n")
+        for i in range(qnt_arquivos):
+            f.write(f"\tstatic mapa_atual + #{i}, #tile_map{i+1}\n")
+        f.write("qnt_niveis: var #1\n")
+        f.write(f"\tstatic qnt_niveis + #0, #{qnt_arquivos}\n")
         f.write("\n ; Variaveis do Jogo\n")
-        f.write("player_pos: var #1\n")
-        f.write("end_pos: var #1\n")
-        f.write("gate_pos: var #1\n")
-        f.write("total_gelos: var #1\n")
+        f.write("player_pos_atual: var #1\n")
+        f.write(f"player_pos: var #{qnt_arquivos}\n")
+        for i in range(qnt_arquivos):
+            f.write(f"\tstatic player_pos + #{i}, player_pos{i+1}\n")
+        f.write("end_pos_atual: var #1\n")
+        f.write(f"end_pos: var #{qnt_arquivos}\n")
+        for i in range(qnt_arquivos):
+            f.write(f"\tstatic end_pos + #{i}, end_pos{i+1}\n")
+        f.write("gate_pos_atual: var #1\n")
+        f.write(f"gate_pos: var #{qnt_arquivos}\n")
+        for i in range(qnt_arquivos):
+            f.write(f"\tstatic gate_pos + #{i}, gate_pos{i+1}\n")
+        f.write("total_gelos_atual: var #1\n")
+        f.write(f"total_gelos: var #{qnt_arquivos}\n")
+        for i in range(qnt_arquivos):
+            f.write(f"\tstatic total_gelos + #{i}, total_gelos{i+1}\n")
 
     print(f"Arquivo '{nome_arquivo_saida}' gerado com sucesso!")
     if pos_start is not None:
@@ -100,12 +120,14 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
     if pos_end is not None:
         print(f"Destino final (E): {pos_end}")
 
+
 def main():
     qnt_mapas = int(input("Quantos mapas serão usados: "))
     mapas = [""] * qnt_mapas
     for i in range(qnt_mapas):
         mapas[i] = input(f"Insira o caminho do {i+1}º mapa: ").strip()
     gerar_mapa_asm(mapas, qnt_mapas)
+
 
 if __name__ == "__main__":
     main()
