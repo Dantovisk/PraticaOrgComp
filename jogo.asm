@@ -3513,7 +3513,7 @@ opcao3: string "                                        3 - SAIR"
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
 instrucoes_obj: string "OBJETIVO: CHEGAR NO FINAL (E) PASSANDO POR TODOS OS GELOS"
-instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
+instrucoes_evt: string "PERIGO: EVITE A AGUA (.) QUE APARECE DPS QUE VOCE PASSA"
 
 ;──────────────────────────────────────────────────────
 ; Rotina: menu
@@ -5064,6 +5064,14 @@ confere_colisao:
     ; ────┤ Bandeira: ganhar jogo ├────
     loadn r4, #'E'
     cmp r6, r4
+    jne le_mov
+
+    load r2, points
+    load r4, total_gelos_atual
+
+    cmp r2, r4
+    jne le_mov
+
     loadn r2, #1
     jeq fim_jogo
 
@@ -5141,7 +5149,6 @@ prox_nivel:
     loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
     call imprimir_mapa
     call imprime_pontuacao
-    call imprime_num_gelos
 
     load r0, player_pos_atual
 	loadi r0, r0
@@ -5445,7 +5452,7 @@ imprime_numero:
     ; Caso especial para zero
     cmp r0, r3
     jne imprime_numero_loop
-    loadn r4, #'/'
+    loadn r4, #'0'
     outchar r4, r1
     jmp imprime_numero_fim
 

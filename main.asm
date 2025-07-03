@@ -177,6 +177,14 @@ confere_colisao:
     ; ────┤ Bandeira: ganhar jogo ├────
     loadn r4, #'E'
     cmp r6, r4
+    jne le_mov
+
+    load r2, points
+    load r4, total_gelos_atual
+
+    cmp r2, r4
+    jne le_mov
+
     loadn r2, #1
     jeq fim_jogo
 
