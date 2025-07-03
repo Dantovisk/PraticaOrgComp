@@ -1,3 +1,9 @@
+jmp main 
+
+;---- Inclusão de arquivos ----
+#include MapDraw.asm
+#include menu.asm
+
 ;---- Variáveis ----
 ; Variáveis do player
 game_state : var #1  ; 0 - default; 1 - ganhou; 2 - perdeu
