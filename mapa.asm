@@ -2271,7 +2271,7 @@ gate_pos3: var #1
 	static gate_pos3 + #0, #501 ; posicao do portao no grid
 
 total_gelos3: var #1
-	static total_gelos3 + #0, #102 ; 
+	static total_gelos3 + #0, #103 ; 
 ; Mapa gerado a partir da imagem mapas/fase3.png
 tile_map3 : var #1120
 	static tile_map3 + #0, #'#'
@@ -2573,11 +2573,11 @@ tile_map3 : var #1120
 	static tile_map3 + #296, #'#'
 	static tile_map3 + #297, #'#'
 	static tile_map3 + #298, #'#'
-	static tile_map3 + #299, #' '
+	static tile_map3 + #299, #'+'
 	static tile_map3 + #300, #' '
 	static tile_map3 + #301, #'+'
 	static tile_map3 + #302, #' '
-	static tile_map3 + #303, #' '
+	static tile_map3 + #303, #'+'
 	static tile_map3 + #304, #'#'
 	static tile_map3 + #305, #'#'
 	static tile_map3 + #306, #'#'
@@ -2653,11 +2653,11 @@ tile_map3 : var #1120
 	static tile_map3 + #376, #' '
 	static tile_map3 + #377, #' '
 	static tile_map3 + #378, #'#'
-	static tile_map3 + #379, #'+'
+	static tile_map3 + #379, #' '
 	static tile_map3 + #380, #' '
 	static tile_map3 + #381, #'+'
 	static tile_map3 + #382, #' '
-	static tile_map3 + #383, #'+'
+	static tile_map3 + #383, #' '
 	static tile_map3 + #384, #'#'
 	static tile_map3 + #385, #'#'
 	static tile_map3 + #386, #'#'
@@ -2808,16 +2808,16 @@ tile_map3 : var #1120
 	static tile_map3 + #531, #' '
 	static tile_map3 + #532, #'*'
 	static tile_map3 + #533, #'#'
-	static tile_map3 + #534, #' '
+	static tile_map3 + #534, #'+'
 	static tile_map3 + #535, #' '
 	static tile_map3 + #536, #' '
 	static tile_map3 + #537, #' '
 	static tile_map3 + #538, #' '
 	static tile_map3 + #539, #'#'
 	static tile_map3 + #540, #' '
-	static tile_map3 + #541, #' '
-	static tile_map3 + #542, #' '
-	static tile_map3 + #543, #' '
+	static tile_map3 + #541, #'+'
+	static tile_map3 + #542, #'+'
+	static tile_map3 + #543, #'+'
 	static tile_map3 + #544, #'#'
 	static tile_map3 + #545, #'#'
 	static tile_map3 + #546, #'#'
@@ -2848,7 +2848,7 @@ tile_map3 : var #1120
 	static tile_map3 + #571, #'#'
 	static tile_map3 + #572, #' '
 	static tile_map3 + #573, #'#'
-	static tile_map3 + #574, #' '
+	static tile_map3 + #574, #'+'
 	static tile_map3 + #575, #'#'
 	static tile_map3 + #576, #' '
 	static tile_map3 + #577, #' '
@@ -2857,7 +2857,7 @@ tile_map3 : var #1120
 	static tile_map3 + #580, #' '
 	static tile_map3 + #581, #'#'
 	static tile_map3 + #582, #'#'
-	static tile_map3 + #583, #' '
+	static tile_map3 + #583, #'+'
 	static tile_map3 + #584, #'#'
 	static tile_map3 + #585, #'#'
 	static tile_map3 + #586, #'#'
@@ -2897,7 +2897,7 @@ tile_map3 : var #1120
 	static tile_map3 + #620, #' '
 	static tile_map3 + #621, #'@'
 	static tile_map3 + #622, #'#'
-	static tile_map3 + #623, #' '
+	static tile_map3 + #623, #'+'
 	static tile_map3 + #624, #'#'
 	static tile_map3 + #625, #'#'
 	static tile_map3 + #626, #'#'
@@ -2926,8 +2926,8 @@ tile_map3 : var #1120
 	static tile_map3 + #649, #'#'
 	static tile_map3 + #650, #' '
 	static tile_map3 + #651, #' '
-	static tile_map3 + #652, #' '
-	static tile_map3 + #653, #' '
+	static tile_map3 + #652, #'+'
+	static tile_map3 + #653, #'+'
 	static tile_map3 + #654, #' '
 	static tile_map3 + #655, #'#'
 	static tile_map3 + #656, #' '
@@ -2937,7 +2937,7 @@ tile_map3 : var #1120
 	static tile_map3 + #660, #'#'
 	static tile_map3 + #661, #'#'
 	static tile_map3 + #662, #'#'
-	static tile_map3 + #663, #' '
+	static tile_map3 + #663, #'+'
 	static tile_map3 + #664, #'#'
 	static tile_map3 + #665, #'#'
 	static tile_map3 + #666, #'#'
@@ -2972,12 +2972,12 @@ tile_map3 : var #1120
 	static tile_map3 + #695, #'#'
 	static tile_map3 + #696, #' '
 	static tile_map3 + #697, #' '
-	static tile_map3 + #698, #' '
-	static tile_map3 + #699, #' '
-	static tile_map3 + #700, #' '
-	static tile_map3 + #701, #' '
-	static tile_map3 + #702, #' '
-	static tile_map3 + #703, #' '
+	static tile_map3 + #698, #'+'
+	static tile_map3 + #699, #'+'
+	static tile_map3 + #700, #'+'
+	static tile_map3 + #701, #'+'
+	static tile_map3 + #702, #'+'
+	static tile_map3 + #703, #'+'
 	static tile_map3 + #704, #'#'
 	static tile_map3 + #705, #'#'
 	static tile_map3 + #706, #'#'
@@ -3410,23 +3410,23 @@ qnt_niveis: var #1
  ; Variaveis do Jogo
 player_pos_atual: var #1
 player_pos: var #3
-	static player_pos + #0, player_pos1
-	static player_pos + #1, player_pos2
-	static player_pos + #2, player_pos3
+	static player_pos + #0, #player_pos1
+	static player_pos + #1, #player_pos2
+	static player_pos + #2, #player_pos3
 end_pos_atual: var #1
 end_pos: var #3
-	static end_pos + #0, end_pos1
-	static end_pos + #1, end_pos2
-	static end_pos + #2, end_pos3
+	static end_pos + #0, #end_pos1
+	static end_pos + #1, #end_pos2
+	static end_pos + #2, #end_pos3
 gate_pos_atual: var #1
 gate_pos: var #3
-	static gate_pos + #0, gate_pos1
-	static gate_pos + #1, gate_pos2
-	static gate_pos + #2, gate_pos3
+	static gate_pos + #0, #gate_pos1
+	static gate_pos + #1, #gate_pos2
+	static gate_pos + #2, #gate_pos3
 total_gelos_atual: var #1
 total_gelos: var #3
-	static total_gelos + #0, total_gelos1
-	static total_gelos + #1, total_gelos2
-	static total_gelos + #2, total_gelos3
+	static total_gelos + #0, #total_gelos1
+	static total_gelos + #1, #total_gelos2
+	static total_gelos + #2, #total_gelos3
 pos_gelo_duplo: var #1
 static pos_gelo_duplo + #0, #0

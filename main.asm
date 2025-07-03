@@ -637,7 +637,7 @@ delay_clock:
 
     
 
-    loadn r0, #10        ; n de loops
+    loadn r0, #1        ; n de loops
 
     loadn r2, #0
 

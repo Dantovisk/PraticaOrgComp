@@ -45,6 +45,7 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
                 elif r > 200 and g > 100 and b > 100:
                     mapa.append("Z")
                     pos_gate = index
+                    qnt_gelos += 1
                 # Amarelo - '*' (considerando R e G altos, B baixo) - chave
                 elif r > 200 and g > 190 and b < 100:
                     mapa.append("*")
