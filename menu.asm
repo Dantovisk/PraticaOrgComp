@@ -6,8 +6,8 @@ opcao3: string "                                        3 - SAIR"
 
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
-instrucoes_obj: string "OBJETIVO: COLETE AS MOEDAS (o) E CHEGUE NO FINAL (E)"
-instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
+instrucoes_obj: string "OBJETIVO: CHEGAR NO FINAL (E) PASSANDO POR TODOS OS GELOS"
+instrucoes_evt: string "PERIGO: EVITE A AGUA (.) QUE APARECE DPS QUE VOCE PASSA"
 
 ;──────────────────────────────────────────────────────
 ; Rotina: menu

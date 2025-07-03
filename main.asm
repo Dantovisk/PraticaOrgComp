@@ -3,6 +3,7 @@ jmp main
 ;---- Inclusão de arquivos ----
 #include MapDraw.asm
 #include menu.asm
+#include troll.asm
 
 ;---- Variáveis ----
 ; Variáveis do player
@@ -28,28 +29,29 @@ main:
     ; Imprime o menu
     call menu
 
-    ; Loadar as variáveis da primeira fase
-    load r0, player_pos1
-    store player_pos, r0
-    load r0, end_pos1
-    store end_pos, r0
-    load r0, total_gelos1
-    store total_gelos, r0
-    load r0, gate_pos1
-    store gate_pos, r0
-    loadn r0, #tile_map1
-    store mapa_atual, r0
+   jmp prox_nivel
+   ;; Loadar as variáveis da primeira fase
+   ;load r0, player_pos1
+   ;store player_pos, r0
+   ;load r0, end_pos1
+   ;store end_pos, r0
+   ;load r0, total_gelos1
+   ;store total_gelos, r0
+   ;load r0, gate_pos1
+   ;store gate_pos, r0
+   ;loadn r0, #tile_map1
+   ;store mapa_atual, r0
 
-    ; Imprime o mapa na tela a partir da posição 80
-    load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-    load r1, mapa_atual          ; Endereço do mapa_atual 
-    loadn r2, #256               ; Cor branca
-    loadn r3, #1120              ; Tamanho do mapa 
-    
-    call imprimir_mapa
-    call imprime_pontuacao
+   ;; Imprime o mapa na tela a partir da posição 80
+   ;load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
+   ;load r1, mapa_atual          ; Endereço do mapa_atual 
+   ;loadn r2, #256               ; Cor branca
+   ;loadn r3, #1120              ; Tamanho do mapa 
+   ;
+   ;call imprimir_mapa
+   ;call imprime_pontuacao
 
-    load r0, player_pos
+   ;load r0, player_pos
 
 
 ; ────────────┤ Funções de movimentação ├────────────
@@ -99,7 +101,6 @@ checa_movimento:
     loadn r2, #'a'  ; velocidades[3] = indo pra esquerda
     cmp r1, r2      ; dir == 'a'
     jeq pos_decrementando
-    
     jmp le_mov  ; Se não moveu -> Le entrada de novo
 
 
@@ -124,7 +125,8 @@ pos_decrementando:  ; Movimento para esquerda ou para cima -> Decrementa pos
     sub r1, r0, r2  ; r1 = prox_pos | prox_pos = pos_atual - speed
 
 confere_colisao:
-    loadn r6, #tile_map1    ; r6 = end(tile_map)
+	
+    load r6, mapa_atual    ; r6 = end(tile_map)
     add r6, r6, r1  ; r6 = end(tile_map[prox_pos])
     loadi r6, r6    ; r6 = tile_map[prox_pos] | sprite que vamos comparard
 
@@ -145,15 +147,26 @@ confere_colisao:
     ; ────┤ Chave: muito chave neh truta, nois eh fechamento ├────
     loadn r4, #'*'
     cmp r6, r4
-    jne nao_coletou_chave
-
+    jne gelo_duplo 
+    
+    call abrir_portao
     call atualiza_chao
     call movimentar_player
     jmp le_mov      ; continua a movimentação
     ; ────────────────────────────────────────
     
-
-    nao_coletou_chave:
+    gelo_duplo:
+    ; ────┤ Gelo Duplo: vira gelo├────
+    loadn r4, #'+'
+    cmp r6, r4
+    jne ehofim
+    
+    call atualiza_chao
+    call movimentar_player
+    call atualiza_gelo_duplo_verdadeiro
+    jmp le_mov
+    
+    ehofim:
     ; ────┤ Agua: perder jogo ├────
     loadn r4, #'.'
     cmp r6, r4
@@ -189,46 +202,48 @@ perdeu: ; Adicionar tela de derrota talvez
     halt
 
 ganhou:
-    loadn r0, #nivel_atual
+    load r0, nivel_atual
     inc r0
     store nivel_atual, r0 ; Se ganhou, passou de nível
 
-    loadn r1, #qnt_niveis
+    load r1, qnt_niveis
     cmp r0, r1
     jeq zerou
 
 
 
 prox_nivel:
+
     loadn r1, #0
     store points, r1 ; Reseta os pontos (gelos)
 
     loadn r1, #player_pos
     add r1, r1, r0 ; r0 é o nivel atual
+	loadi r1, r1
     store player_pos_atual, r1
 
     loadn r1, #end_pos
     add r1, r1, r0
+	loadi r1, r1
     store end_pos_atual, r1
 
     loadn r1, #gate_pos
     add r1, r1, r0
+	loadi r1, r1
+    loadi r1, r1
     store gate_pos_atual, r1
 
-    loadn r1, #total_gelos_atual
+    loadn r1, #total_gelos
     add r1, r1, r0
+	loadi r1, r1
+	loadi r1, r1
     store total_gelos_atual, r1
-    ; Loadar as variáveis da proxima fase
-    load r1, player_pos2
-    store player_pos, r1
-    load r1, end_pos2
-    store end_pos, r1
-    load r1, total_gelos2
-    store total_gelos, r1
-    load r1, gate_pos2
-    store gate_pos, r1
-    loadn r1, #tile_map2
+
+    loadn r1, #mapas
+    add r1, r1, r0
+	loadi r1, r1
     store mapa_atual, r1
+    
 
     call limpa_tela
 
@@ -240,15 +255,57 @@ prox_nivel:
     call imprimir_mapa
     call imprime_pontuacao
 
-    load r0, player_pos
+    load r0, player_pos_atual
+	loadi r0, r0
+
     jmp le_mov
 
 
 zerou:
+    load r0, pos_inicial_mapa
+    loadn r1, #troll
+    loadn r2, #256
+    loadn r3, #1120
+
+    loadn r4, #60000 ; nro de vzs que vai piscar
+    loadn r5, #0
+loop_zerou:
+    call limpa_tela
+    call imprimir_mapa
+    
+    dec r4
+    cmp r4, r5
+    jne loop_zerou
     halt
 
 
 
+;──────────────────────────────────────────────────────
+; Rotina: abrir_portao
+; Objetivo: Abrir o portao quando pegar um chave 
+;──────────────────────────────────────────────────────
+
+abrir_portao:
+    push r2
+    push r3
+    push r4
+    push r5
+
+    load r2, gate_pos_atual
+    load r5, mapa_atual
+    add r5, r5, r2
+
+    loadn r3, #' '
+    storei r5, r3
+
+    loadn r4, #1024
+    call imprime_pixel
+
+    pop r5
+    pop r4
+    pop r3
+    pop r2
+    rts
 
 ;──────────────────────────────────────────────────────
 ; Rotina: atualiza_chao
@@ -257,27 +314,72 @@ zerou:
 ;   r0 = posição do chão
 ;──────────────────────────────────────────────────────
 atualiza_chao:
-    ; push r2
-    ; push r3
-    ; push r4
-    ; push r6
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+    push r6
 
     mov r2, r0
-    loadn r6, #tile_map1; r6 = end(tile_map)
+    load r6, mapa_atual ; r6 = end(tile_map)
     add r6, r6, r2  ; r6 = end(tile_map[chao])
+
+    loadn r0, #1
+    load r1, pos_gelo_duplo
+
+    cmp r0, r1
+    jeq atualiza_gelo_duplo
  
     loadn r3, #'.'
     storei r6, r3   ; Atualiza o tile_map
     loadn r4, #1024
 
     call imprime_pixel
+    jmp fim_atualiza_chao
 
-    ; pop r6
-    ; pop r4
-    ; pop r3
-    ; pop r2
+atualiza_gelo_duplo:
+    call atualiza_gelo_duplo_falso
+    loadn r3, #' '
+    storei r6, r3   ; Atualiza o tile_map
+    loadn r4, #1024
+
+    call imprime_pixel
+
+fim_atualiza_chao:
+    pop r6
+    pop r4
+    pop r3
+    pop r2
+    pop r1
+    pop r0
     rts
 
+;──────────────────────────────────────────────────────
+; Rotina: atualiza_gelo_duplo_verdadeiro
+; Objetivo: Atualiza a variavel que diz se a posicao atual eh um gelo duplo para verdadeiro
+;──────────────────────────────────────────────────────
+atualiza_gelo_duplo_verdadeiro:
+    push r0
+
+    loadn r0, #1
+    store pos_gelo_duplo, r0
+
+    pop r0
+    rts
+
+;──────────────────────────────────────────────────────
+; Rotina: atualiza_gelo_duplo_falso
+; Objetivo: Atualiza a variavel que diz se a posicao atual eh um gelo duplo para falso
+;──────────────────────────────────────────────────────
+atualiza_gelo_duplo_falso:
+    push r0
+
+    loadn r0, #0
+    store pos_gelo_duplo, r0
+
+    pop r0
+    rts
 
 ;──────────────────────────────────────────────────────
 ; Rotina: movimentar_player
@@ -300,7 +402,7 @@ movimentar_player:
     ; push r6
 
     mov r0, r1      ; r0 = prox_pos
-    loadn r6, #tile_map1    ; r3 = end(tile_map)
+    load r6, mapa_atual    ; r3 = end(tile_map)
 
     mov r2, r0
     loadn r3, #'@'
@@ -418,7 +520,7 @@ imprime_num_gelos:
     inc r1
 
     ; Imprime total de gelos
-    load r0, total_gelos
+    load r0, total_gelos_atual
     call imprime_numero
 
     pop r7

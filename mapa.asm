@@ -1140,7 +1140,7 @@ gate_pos2: var #1
 
 total_gelos2: var #1
 	static total_gelos2 + #0, #76 ; 
-; Mapa gerado a partir da imagem mapas/fase2semdetalhes.png
+; Mapa gerado a partir da imagem mapas/fase2.png
 tile_map2 : var #1120
 	static tile_map2 + #0, #'#'
 	static tile_map2 + #1, #'#'
@@ -1479,7 +1479,7 @@ tile_map2 : var #1120
 	static tile_map2 + #334, #'+'
 	static tile_map2 + #335, #' '
 	static tile_map2 + #336, #' '
-	static tile_map2 + #337, #' '
+	static tile_map2 + #337, #'+'
 	static tile_map2 + #338, #' '
 	static tile_map2 + #339, #' '
 	static tile_map2 + #340, #'+'
@@ -1599,7 +1599,7 @@ tile_map2 : var #1120
 	static tile_map2 + #454, #' '
 	static tile_map2 + #455, #' '
 	static tile_map2 + #456, #' '
-	static tile_map2 + #457, #' '
+	static tile_map2 + #457, #'+'
 	static tile_map2 + #458, #' '
 	static tile_map2 + #459, #' '
 	static tile_map2 + #460, #'+'
@@ -3399,10 +3399,11 @@ tile_map3 : var #1120
  ; Nivel atual
 nivel_atual: var #1
 	static nivel_atual + #0, #0
-mapa_atual: var #3
-	static mapa_atual + #0, #tile_map1
-	static mapa_atual + #1, #tile_map2
-	static mapa_atual + #2, #tile_map3
+mapa_atual: var #1
+mapas: var #3
+	static mapas + #0, #tile_map1
+	static mapas + #1, #tile_map2
+	static mapas + #2, #tile_map3
 qnt_niveis: var #1
 	static qnt_niveis + #0, #3
 
@@ -3427,3 +3428,5 @@ total_gelos: var #3
 	static total_gelos + #0, total_gelos1
 	static total_gelos + #1, total_gelos2
 	static total_gelos + #2, total_gelos3
+pos_gelo_duplo: var #1
+static pos_gelo_duplo + #0, #0

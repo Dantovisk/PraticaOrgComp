@@ -91,9 +91,10 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
         f.write("\n\n ; Nivel atual\n")
         f.write("nivel_atual: var #1\n")
         f.write("\tstatic nivel_atual + #0, #0\n")
-        f.write(f"mapa_atual: var #{qnt_arquivos}\n")
+        f.write("mapa_atual: var #1\n")
+        f.write(f"mapas: var #{qnt_arquivos}\n")
         for i in range(qnt_arquivos):
-            f.write(f"\tstatic mapa_atual + #{i}, #tile_map{i+1}\n")
+            f.write(f"\tstatic mapas + #{i}, #tile_map{i+1}\n")
         f.write("qnt_niveis: var #1\n")
         f.write(f"\tstatic qnt_niveis + #0, #{qnt_arquivos}\n")
         f.write("\n ; Variaveis do Jogo\n")
@@ -113,6 +114,8 @@ def gerar_mapa_asm(arquivos_entrada, qnt_arquivos, nome_arquivo_saida="mapa.asm"
         f.write(f"total_gelos: var #{qnt_arquivos}\n")
         for i in range(qnt_arquivos):
             f.write(f"\tstatic total_gelos + #{i}, total_gelos{i+1}\n")
+        f.write("pos_gelo_duplo: var #1\n")
+        f.write("static pos_gelo_duplo + #0, #0")
 
     print(f"Arquivo '{nome_arquivo_saida}' gerado com sucesso!")
     if pos_start is not None:
