@@ -1157,7 +1157,7 @@ tile_map1 : var #1120
 	static tile_map1 + #1119, #'#'
 
 
- ; N�vel atual
+ ; Nivel atual
 nivel_atual: var #1
 	static nivel_atual + #0, #1
 mapa_atual: var #1
@@ -1168,11 +1168,11 @@ end_pos: var #1
 gate_pos: var #1
 total_gelos: var #1
 
-;---- Variáveis ----
+;---- Variaveis ----
 pos_inicial_mapa : var #1
     static pos_inicial_mapa, #80  ; Posição inicial para imprimir o mapa
-
-;------------------------------------------------------
+	
+;──────────────────────────────────────────────────────
 ; Rotina: imprimir_mapa
 ; Objetivo: Imprimir um mapa linear na tela
 ; Entradas:
@@ -1182,8 +1182,7 @@ pos_inicial_mapa : var #1
 ;   r3 = tamanho do mapa (número total de caracteres)
 ; Observações:
 ;   A tela é tratada como linear de 0 a 1199, sem necessidade de quebra manual
-;------------------------------------------------------
-
+;──────────────────────────────────────────────────────
 imprimir_mapa:
     ; Salva os registradores usados
     push r0
@@ -1229,7 +1228,10 @@ instrucoes_mov: string "MOVIMENTO: W - A - S - D"
 instrucoes_obj: string "OBJETIVO: COLETE AS MOEDAS (o) E CHEGUE NO FINAL (E)"
 instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
 
-;---- Menu do Jogo ----
+;──────────────────────────────────────────────────────
+; Rotina: menu
+; Objetivo: Imprimir o menu do jogo
+;──────────────────────────────────────────────────────
 menu:
     push r0
     push r1
@@ -1322,6 +1324,10 @@ seleciona_opcao3:
     halt
 
 ;---- Funções Auxiliares ----
+;──────────────────────────────────────────────────────
+; Rotina: limpa_tela
+; Objetivo: Limpar a tela '-'
+;──────────────────────────────────────────────────────
 limpa_tela:
     push r0
     push r1
@@ -1343,6 +1349,10 @@ limpa_loop:
     pop r0
     rts
 
+;──────────────────────────────────────────────────────
+; Rotina: imprime_string
+; Objetivo: Imprime as strings na tela
+;──────────────────────────────────────────────────────
 imprime_string:
     push r0
     push r1
@@ -1350,18 +1360,18 @@ imprime_string:
     push r3
     push r4
     
-    loadn r3, #'\0'      ; Terminador de string
+    loadn r3, #0     ; Terminador de string (nulo)
     
 imprime_loop:
-    loadi r4, r1         ; Carrega caractere da string
-    cmp r4, r3           ; Verifica se é o terminador
+    loadi r4, r1     ; Carrega caractere
+    cmp r4, r3       ; Verifica fim da string
     jeq imprime_fim
     
-    add r4, r4, r2       ; Aplica cor ao caractere
-    outchar r4, r0       ; Imprime na posição
+    add r4, r4, r2   ; Aplica cor
+    outchar r4, r0   ; Imprime
     
-    inc r0               ; Próxima posição na tela
-    inc r1               ; Próximo caractere da string
+    inc r0           ; Próxima posição na tela
+    inc r1           ; Próximo caractere
     jmp imprime_loop
     
 imprime_fim:
@@ -1372,6 +1382,10 @@ imprime_fim:
     pop r0
     rts
 
+;──────────────────────────────────────────────────────
+; Rotina: Espera tecla
+; Objetivo: Espera o usuário soltar a tecla para voltar ao menu
+;──────────────────────────────────────────────────────
 espera_tecla:
     push r0
     push r1
@@ -1386,6 +1400,7 @@ espera_tecla:
     pop r1
     pop r0
     rts
+
 ;---- Variáveis ----
 ; Variáveis do player
 game_state : var #1  ; 0 - default; 1 - ganhou; 2 - perdeu
@@ -1447,10 +1462,9 @@ main:
 ;──────────────────────────────────────────────────────
 le_mov:
 	loadn r1, #0
-	loadn r2, #255
-	
+	loadn r2, #0
+
 	inchar r1		; r1 = dir | direção lida pelo usuario
-	
 	cmp r1, r2		; nao leu nada -> loop pra ler denovo
 	jeq le_mov
 
@@ -1507,7 +1521,7 @@ pos_decrementando:	; Movimento para esquerda ou para cima -> Decrementa pos
 	sub r1, r0, r2	; r1 = prox_pos | prox_pos = pos_atual - speed
 
 confere_colisao:
-    load r6, mapa_atual	; r6 = end(tile_map)
+    loadn r6, #tile_map1	; r6 = end(tile_map)
 	add r6, r6, r1	; r6 = end(tile_map[prox_pos])
 	loadi r6, r6	; r6 = tile_map[prox_pos] | sprite que vamos comparard
 
@@ -1517,7 +1531,7 @@ confere_colisao:
 	cmp r6, r4
 	jne posicao_nao_vazia
 	
-	call atualiza_gelos	
+	call atualiza_gelos
     call atualiza_chao
 	call movimentar_player
     jmp le_mov      ; continua a movimentação
@@ -1657,13 +1671,13 @@ zerou:
 ;   r0 = posição do chão
 ;──────────────────────────────────────────────────────
 atualiza_chao:
-    push r2
-    push r3
-    push r4
-    push r6
+    ; push r2
+    ; push r3
+    ; push r4
+    ; push r6
 
     mov r2, r0
-    load r6, mapa_atual; r6 = end(tile_map)
+    loadn r6, #tile_map1; r6 = end(tile_map)
 	add r6, r6, r2	; r6 = end(tile_map[chao])
  
     loadn r3, #'.'
@@ -1672,10 +1686,10 @@ atualiza_chao:
 
 	call imprime_pixel
 
-    pop r6
-    pop r4
-    pop r3
-    pop r2
+    ; pop r6
+    ; pop r4
+    ; pop r3
+    ; pop r2
     rts
 
 
@@ -1693,14 +1707,14 @@ atualiza_chao:
 ;   r0 = r1 = nova posição do player
 ;──────────────────────────────────────────────────────
 movimentar_player:	
-    push r2
-    push r3
-    push r4
-    push r5
-    push r6
+    ; push r2
+    ; push r3
+    ; push r4
+    ; push r5
+    ; push r6
 
 	mov r0, r1		; r0 = prox_pos
-	load r6, mapa_atual	; r3 = end(tile_map)
+	loadn r6, #tile_map1	; r3 = end(tile_map)
 
     mov r2, r0
     loadn r3, #'@'
@@ -1711,11 +1725,11 @@ movimentar_player:
 	call imprime_pixel
 	call delay_clock
 
-    pop r6
-    pop r5
-    pop r4
-    pop r3
-    pop r2
+    ; pop r6
+    ; pop r5
+    ; pop r4
+    ; pop r3
+    ; pop r2
 
 	rts
 
@@ -1727,13 +1741,14 @@ movimentar_player:
 atualiza_gelos:
     push r2
     push r3
-    loadn r2, #points
-    loadi r3, r2
-    inc r3
-    store #points, r3
-
+    
+    loadn r2, #points  ; Carrega endereço de points
+    loadi r3, r2     ; Lê valor atual
+    inc r3           ; Incrementa
+    store points, r3 ; Armazena de volta (sem #)
+    
     call imprime_num_gelos
-
+    
     pop r3
     pop r2
     rts
@@ -1766,9 +1781,9 @@ imprime_pixel:
 
 imprime_pontuacao:
     push r3
-	push r5
-	push r6
-	push r7
+	; push r5
+	; push r6
+	; push r7
 
     loadn r5, points_string
     load r6, points_pos
@@ -1783,12 +1798,15 @@ imprime_pontuacao:
         cmp r3, r7
         jne string_loop
 
-    pop r7
-    pop r6
-    pop r5
+    ; pop r7
+    ; pop r6
+    ; pop r5
     pop r3
+	rts
 
 imprime_num_gelos:
+    push r0
+    push r1
     push r2
     push r3
     push r4
@@ -1796,25 +1814,19 @@ imprime_num_gelos:
     push r6
     push r7
 
-    ; r5 recebe o valor da variável 'points' (número a ser impresso)
-    load r5, points
-    call empilha_digitos
+    ; Imprime pontos coletados
+    load r0, points
+    loadn r1, #7          ; Posição inicial
+    call imprime_numero
 
-    loadn r5, #7              ; posição de início da impressão
-    call imprime_digitos
-    mov r2, r5                ; salva posição após a impressão
-
-    ; imprime o '/'
+    ; Imprime barra
     loadn r7, #'/'
-    outchar r7, r5
-    inc r5
-    mov r2, r5                ; salva próxima posição
+    outchar r7, r1
+    inc r1
 
-    ; imprime total_gelos
-    load r5, total_gelos
-    call empilha_digitos
-    mov r5, r2
-    call imprime_digitos
+    ; Imprime total de gelos
+    load r0, total_gelos
+    call imprime_numero
 
     pop r7
     pop r6
@@ -1822,73 +1834,109 @@ imprime_num_gelos:
     pop r4
     pop r3
     pop r2
-
+    pop r1
+    pop r0
     rts
 
-
-;-----------------------------------------
-; empilha_digitos
-; Entrada: r5 contém o número a ser empilhado
-; Saída: pilha com dígitos (terminada com -1)
-; Usa: r3, r4, r5, r6, r7
-empilha_digitos:
-    loadn r3, #-1         ; sentinela
+;--------------------------------------------------
+; imprime_numero
+; Entrada: r0 = número, r1 = posição na tela
+; Usa: r2-r7
+;--------------------------------------------------
+imprime_numero:
+    push r2
     push r3
+    push r4
+    push r5
+    push r6
+    push r7
 
-    loadn r6, #10         ; divisor decimal
-    loadn r7, #0          ; valor de comparação
+    loadn r2, #10        ; Divisor
+    loadn r3, #0         ; Para comparação
+    loadn r5, #'0'       ; Base ASCII
+    loadn r6, #48        ; Offset para conversão
+    loadn r7, #0         ; Contador de dígitos
 
-    empilha_loop1:
-        mod r4, r5, r6        ; extrai último dígito
-        push r4
-        div r5, r5, r6
-        cmp r5, r7
-        jne empilha_loop1
+    ; Caso especial para zero
+    cmp r0, r3
+    jne imprime_numero_loop
+    loadn r4, #'0'
+    outchar r4, r1
+    jmp imprime_numero_fim
 
-    rts
+imprime_numero_loop:
+    mod r4, r0, r2      ; Pega último dígito
+    div r0, r0, r2      ; Remove dígito
+    
+    add r4, r4, r6      ; Converte para ASCII
+    push r4             ; Empilha caractere
+    inc r7              ; Incrementa contador de dígitos
+    
+    cmp r0, r3          ; Verifica se terminou
+    jne imprime_numero_loop
 
-;-----------------------------------------
-; imprime_digitos
-; Entrada: pilha com dígitos, r5 = coluna inicial
-; Usa: r3, r4, r6, r7
-imprime_digitos:
-    loadn r6, #'0'        ; para conversão ASCII
+    ; Desempilha e imprime
+imprime_numero_imprime:
     pop r4
+    outchar r4, r1
+    inc r1
+    dec r7
+    jnz imprime_numero_imprime
 
-    imprime_loop1:
-        add r7, r6, r4        ; converte para caractere
-        outchar r7, r5
-        inc r5
-
-        pop r4
-        cmp r4, r3
-        jne imprime_loop1
-
+imprime_numero_fim:
+    pop r7
+    pop r6
+    pop r5
+    pop r4
+    pop r3
+    pop r2
     rts
-
 
 
 delay_clock:
+
 	push r0
+
 	push r1
+
 	push r2
+
 	
-	loadn r0, #100		; n de loops
+
+	loadn r0, #1		; n de loops
+
 	loadn r2, #0
+
 	
+
 	delay_loop:
-        loadn r1, #60000	; n de nops (MAX é 2^16 = 65,5 mil)
-        dec r0
-        delay_nop:	; roda (n_loops * n_nops) vezes
-        nop
-        dec r1
-        cmp r1, r2
-        jne delay_nop
+
+	loadn r1, #300000	; n de nops
+
+	dec r0
+
+	delay_nop:	; roda (n_loops * n_nops) vezes
+
+	nop
+
+	dec r1
+
+	cmp r1, r2
+
+	jne delay_nop
+
 	
+
 	cmp r0, r2
+
 	jne delay_loop
+
 	
+
 	pop r2
+
 	pop r1
+
 	pop r0
+
 	rts
