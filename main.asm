@@ -85,6 +85,7 @@ le_mov2:
     jne le_mov2
 
 
+
 ; r1 = direção lida
 checa_movimento:
     ; ────────────┤ Checagem de movimento vertical ├────────────
