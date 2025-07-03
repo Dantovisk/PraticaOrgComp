@@ -3513,7 +3513,7 @@ opcao3: string "                                        3 - SAIR"
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
 instrucoes_obj: string "OBJETIVO: CHEGAR NO FINAL (E) PASSANDO POR TODOS OS GELOS"
-instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
+instrucoes_evt: string "PERIGO: EVITE A AGUA (.) QUE APARECE DPS QUE VOCE PASSA"
 
 ;──────────────────────────────────────────────────────
 ; Rotina: menu
@@ -5141,7 +5141,6 @@ prox_nivel:
     loadn r3, #1120              ; Tamanho do mapa  NAO TA MODULARIZADO, MAS DANE-SE ddr
     call imprimir_mapa
     call imprime_pontuacao
-    call imprime_num_gelos
 
     load r0, player_pos_atual
 	loadi r0, r0
@@ -5202,37 +5201,37 @@ abrir_portao:
 ;   r0 = posição do chão
 ;──────────────────────────────────────────────────────
 atualiza_chao:
-    push r0
-    push r1
+    push r0         
+    push r1         ; Preserva registradores usados na rotina
     push r2
     push r3
     push r4
     push r6
 
-    mov r2, r0
-    load r6, mapa_atual ; r6 = end(tile_map)
-    add r6, r6, r2  ; r6 = end(tile_map[chao])
+    mov r2, r0      ; r2 = posição do chão que será atualizada
+    load r6, mapa_atual     ; r6 recebe o endereço base do mapa (tile_map)
+    add r6, r6, r2  ; r6 agora aponta para a posição específica no mapa
 
-    loadn r0, #1
-    load r1, pos_gelo_duplo
+    loadn r0, #1        ; r0 <- 1 (valor usado para comparação com pos_gelo_duplo)
+    load r1, pos_gelo_duplo  ; r1 <- valor da posição atual do gelo duplo
 
-    cmp r0, r1
-    jeq atualiza_gelo_duplo
- 
-    loadn r3, #'.'
-    storei r6, r3   ; Atualiza o tile_map
-    loadn r4, #1024
+    cmp r0, r1      ; Compara se estamos na posição do gelo duplo
+    jeq atualiza_gelo_duplo ; Se sim, desvia para atualização especial
 
-    call imprime_pixel
-    jmp fim_atualiza_chao
+    loadn r3, #'.'  ; r3 <- caractere que representa água ('.')
+    storei r6, r3   ; Atualiza o mapa: coloca água na posição (tile_map[pos] <- '.')
+    loadn r4, #1024 ; r4 <- cor azul (código 1024) para imprimir pixel
+
+    call imprime_pixel     ; Chama rotina que desenha o pixel atualizado
+    jmp fim_atualiza_chao  ; Vai para o final da rotina
 
 atualiza_gelo_duplo:
-    call atualiza_gelo_duplo_falso
-    loadn r3, #' '
-    storei r6, r3   ; Atualiza o tile_map
-    loadn r4, #1024
+    call atualiza_gelo_duplo_falso ; Chama rotina específica para gelo duplo
+    loadn r3, #' '     ; r3 <- espaço em branco (gelo duplo vira vazio)
+    storei r6, r3      ; Atualiza o mapa: remove gelo duplo
+    loadn r4, #1024    ; r4 <- cor azul para desenhar pixel
 
-    call imprime_pixel
+    call imprime_pixel ; Desenha o novo pixel correspondente ao espaço
 
 fim_atualiza_chao:
     pop r6
@@ -5364,11 +5363,11 @@ imprime_pontuacao:
     push r6
     push r7
 
-    loadn r5, points_string
+    loadn r5, #points_string ; endereço do texto "GELOS: "
     load r6, points_pos
     loadn r7, #'\0'
 
-    string_loop:
+    string_loop:    ;imprime o texto caracter a caracter
         loadi r3, r5
         outchar r3, r6
         inc r5
@@ -5445,7 +5444,7 @@ imprime_numero:
     ; Caso especial para zero
     cmp r0, r3
     jne imprime_numero_loop
-    loadn r4, #'/'
+    loadn r4, #'0'
     outchar r4, r1
     jmp imprime_numero_fim
 
@@ -5477,7 +5476,7 @@ imprime_numero_fim:
     pop r2
     rts
 
-
+;Faz um delay com dois loops aninhados que rodam nops
 delay_clock:
 
     push r0
@@ -5488,7 +5487,7 @@ delay_clock:
 
     
 
-    loadn r0, #1        ; n de loops
+    loadn r0, #10        ; n de loops
 
     loadn r2, #0
 
@@ -5496,7 +5495,7 @@ delay_clock:
 
     delay_loop:
 
-    loadn r1, #300000   ; n de nops
+    loadn r1, #30000   ; n de nops
 
     dec r0
 
