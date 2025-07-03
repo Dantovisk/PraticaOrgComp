@@ -1777,12 +1777,15 @@ imprime_pixel:
     pop r2
     rts
 
-
+;──────────────────────────────────────────────────────
+; Rotina: imprime_pontuacao
+; Objetivo: Imprime o texto de pontuação no topo da tela
+;──────────────────────────────────────────────────────
 imprime_pontuacao:
     push r3
-    ; push r5
-    ; push r6
-    ; push r7
+    push r5
+    push r6
+    push r7
 
     loadn r5, points_string
     load r6, points_pos
@@ -1797,12 +1800,16 @@ imprime_pontuacao:
         cmp r3, r7
         jne string_loop
 
-    ; pop r7
-    ; pop r6
-    ; pop r5
+    pop r7
+    pop r6
+    pop r5
     pop r3
     rts
 
+;──────────────────────────────────────────────────────
+; Rotina: imprime_num_gelos
+; Objetivo: Imprime o número de gelos ao lado do texto de pontuação
+;──────────────────────────────────────────────────────
 imprime_num_gelos:
     push r0
     push r1
@@ -1837,11 +1844,13 @@ imprime_num_gelos:
     pop r0
     rts
 
-;--------------------------------------------------
-; imprime_numero
-; Entrada: r0 = número, r1 = posição na tela
-; Usa: r2-r7
-;--------------------------------------------------
+;──────────────────────────────────────────────────────
+; Rotina: imprime_numero
+; Objetivo: Imprime um unico numero na tela, convertendo cada algarismo para char
+; Entradas:
+;   r0 = Numero
+;   r1 = Posicao na tela
+;──────────────────────────────────────────────────────
 imprime_numero:
     push r2
     push r3
