@@ -32,10 +32,10 @@
 			"buffers":
 			[
 				{
-					"file": "/C/Users/15507819/Downloads/processador/Simulador/jogo.asm",
+					"file": "/C/Users/15447326/Documents/GitHub/TrabalhoOrgComp/Simulador/jogo.asm",
 					"settings":
 					{
-						"buffer_size": 53751,
+						"buffer_size": 164045,
 						"line_ending": "Windows"
 					}
 				}
@@ -72,6 +72,8 @@
 			},
 			"file_history":
 			[
+				"/C/Users/15447326/Desktop/Simulador_Windows_Tudo_Pronto_Fácil (1)/Simulador/jogo.asm",
+				"/C/Users/15507819/Downloads/processador/Simulador/jogo.asm",
 				"/Z/home/pedro-prestes/Downloads/USP/Semestre 3/PratOrgComp/Simulador/jogo.asm",
 				"/V/projetos/trab_simas_cpu/Simulador/Hello4.asm",
 				"/C/Users/frato/Downloads/Simulador_Windows_Tudo_Pronto_Fácil (1)/Simulador/Hello4.asm",
@@ -141,19 +143,19 @@
 					[
 						{
 							"buffer": 0,
-							"file": "/C/Users/15507819/Downloads/processador/Simulador/jogo.asm",
+							"file": "/C/Users/15447326/Documents/GitHub/TrabalhoOrgComp/Simulador/jogo.asm",
 							"semi_transient": false,
 							"settings":
 							{
-								"buffer_size": 53751,
+								"buffer_size": 164045,
 								"regions":
 								{
 								},
 								"selection":
 								[
 									[
-										51141,
-										51141
+										163457,
+										163457
 									]
 								],
 								"settings":
@@ -162,7 +164,7 @@
 									"translate_tabs_to_spaces": false
 								},
 								"translation.x": 0.0,
-								"translation.y": 32436.0,
+								"translation.y": 97926.0,
 								"zoom_level": 1.0
 							},
 							"stack_index": 0,
@@ -210,7 +212,7 @@
 			{
 				"height": 0.0
 			},
-			"position": "0,0,1,-1,-1,-1,-1,760,966,221,1622",
+			"position": "0,2,3,-1,-1,-1,-1,760,966,221,1622",
 			"project": "",
 			"replace":
 			{
