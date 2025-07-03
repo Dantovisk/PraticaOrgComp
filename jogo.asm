@@ -2296,7 +2296,7 @@ gate_pos3: var #1
 	static gate_pos3 + #0, #501 ; posicao do portao no grid
 
 total_gelos3: var #1
-	static total_gelos3 + #0, #101 ; 
+	static total_gelos3 + #0, #103 ; 
 ; Mapa gerado a partir da imagem mapas/fase3.png
 tile_map3 : var #1120
 	static tile_map3 + #0, #'#'
@@ -2598,11 +2598,11 @@ tile_map3 : var #1120
 	static tile_map3 + #296, #'#'
 	static tile_map3 + #297, #'#'
 	static tile_map3 + #298, #'#'
-	static tile_map3 + #299, #' '
+	static tile_map3 + #299, #'+'
 	static tile_map3 + #300, #' '
 	static tile_map3 + #301, #'+'
 	static tile_map3 + #302, #' '
-	static tile_map3 + #303, #' '
+	static tile_map3 + #303, #'+'
 	static tile_map3 + #304, #'#'
 	static tile_map3 + #305, #'#'
 	static tile_map3 + #306, #'#'
@@ -2640,7 +2640,7 @@ tile_map3 : var #1120
 	static tile_map3 + #338, #'#'
 	static tile_map3 + #339, #'+'
 	static tile_map3 + #340, #'#'
-	static tile_map3 + #341, #'#'
+	static tile_map3 + #341, #' '
 	static tile_map3 + #342, #'#'
 	static tile_map3 + #343, #'+'
 	static tile_map3 + #344, #'#'
@@ -2678,11 +2678,11 @@ tile_map3 : var #1120
 	static tile_map3 + #376, #' '
 	static tile_map3 + #377, #' '
 	static tile_map3 + #378, #'#'
-	static tile_map3 + #379, #'+'
+	static tile_map3 + #379, #' '
 	static tile_map3 + #380, #' '
 	static tile_map3 + #381, #'+'
 	static tile_map3 + #382, #' '
-	static tile_map3 + #383, #'+'
+	static tile_map3 + #383, #' '
 	static tile_map3 + #384, #'#'
 	static tile_map3 + #385, #'#'
 	static tile_map3 + #386, #'#'
@@ -3529,7 +3529,7 @@ menu:
 menu_imprimir:  
     call limpa_tela
     
-    ; Imprime título do jogo
+    ; Imprime titulo do jogo
     loadn r0, #40        ; Posição centralizada
     loadn r1, #titulo    ; Endereço do texto
     loadn r2, #2816      ; Cor amarela
@@ -5495,7 +5495,7 @@ delay_clock:
 
     
 
-    loadn r0, #10        ; n de loops
+    loadn r0, #1        ; n de loops
 
     loadn r2, #0
 
