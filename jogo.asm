@@ -1157,7 +1157,7 @@ tile_map1 : var #1120
 	static tile_map1 + #1119, #'#'
 
 
- ; Nivel atual
+ ; N�vel atual
 nivel_atual: var #1
 	static nivel_atual + #0, #1
 mapa_atual: var #1
@@ -1168,11 +1168,11 @@ end_pos: var #1
 gate_pos: var #1
 total_gelos: var #1
 
-;---- Variaveis ----
+;---- Variáveis ----
 pos_inicial_mapa : var #1
     static pos_inicial_mapa, #80  ; Posição inicial para imprimir o mapa
-	
-;──────────────────────────────────────────────────────
+
+;------------------------------------------------------
 ; Rotina: imprimir_mapa
 ; Objetivo: Imprimir um mapa linear na tela
 ; Entradas:
@@ -1182,7 +1182,8 @@ pos_inicial_mapa : var #1
 ;   r3 = tamanho do mapa (número total de caracteres)
 ; Observações:
 ;   A tela é tratada como linear de 0 a 1199, sem necessidade de quebra manual
-;──────────────────────────────────────────────────────
+;------------------------------------------------------
+
 imprimir_mapa:
     ; Salva os registradores usados
     push r0
@@ -1216,12 +1217,11 @@ imprimir_mapa_fim:
     pop r2
     pop r1
     pop r0
-    rts
-;---- Strings do menu ----
+    rts;---- Strings do menu ----
 titulo: string "============== GELO FINO ==============="
-opcao1: string "										1 - INICIAR JOGO"
-opcao2: string "										2 - INSTRUCOES"
-opcao3: string "										3 - SAIR"
+opcao1: string "                                        1 - INICIAR JOGO"
+opcao2: string "                                        2 - INSTRUCOES"
+opcao3: string "                                        3 - SAIR"
 
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
@@ -1304,12 +1304,12 @@ seleciona_opcao2:
     loadn r2, #0         ; Branco
     call imprime_string
 
-	loadn r0, #320
+    loadn r0, #320
     loadn r1, #instrucoes_obj
     loadn r2, #0         ; Branco
     call imprime_string
 
-	loadn r0, #560
+    loadn r0, #560
     loadn r1, #instrucoes_evt
     loadn r2, #0         ; Branco
     call imprime_string
@@ -1400,7 +1400,6 @@ espera_tecla:
     pop r1
     pop r0
     rts
-
 ;---- Variáveis ----
 ; Variáveis do player
 game_state : var #1  ; 0 - default; 1 - ganhou; 2 - perdeu
@@ -1417,8 +1416,8 @@ static points_pos + #0, #0
 
 ; Variaveis de velocidade
 speed : var #2
-static speed + #0, #40	    ; velocidade vertical   (subindo || descendo)
-static speed + #1, #1	    ; velocidade horizontal (esquerda || direita)
+static speed + #0, #40      ; velocidade vertical   (subindo || descendo)
+static speed + #1, #1       ; velocidade horizontal (esquerda || direita)
 
 ;---- Inicio do Programa Principal -----
 main:
@@ -1461,106 +1460,106 @@ main:
 ;   r0 = nova posicao do player
 ;──────────────────────────────────────────────────────
 le_mov:
-	loadn r1, #0
-	loadn r2, #0
+    loadn r1, #0
+    loadn r2, #0
 
-	inchar r1		; r1 = dir | direção lida pelo usuario
-	cmp r1, r2		; nao leu nada -> loop pra ler denovo
-	jeq le_mov
+    inchar r1       ; r1 = dir | direção lida pelo usuario
+    cmp r1, r2      ; nao leu nada -> loop pra ler denovo
+    jeq le_mov
 
 
 ; r1 = direção lida
 checa_movimento:
-	; ────────────┤ Checagem de movimento vertical ├────────────
-	loadn r3, #0	; velocidades[0] = #40 -> vertical (subindo || descendo)
-	
-	; ────────────┤ Checagem subindo ├────────────
-	loadn r2, #'w'
-	cmp r1, r2		; dir == 'w'
-	jeq pos_decrementando
-	
-	; ────────────┤ Checagem descendo ├────────────
-	loadn r2, #'s'
-	cmp r1, r2		; dir == 's'
-	jeq pos_incrementando
-	
-	; ────────────┤ Checagem de movimento horizontal ├────────────
-	loadn r3, #1	; velocidades[1] = #1 -> horizontal (esquerda || direita)
-	
-	; ────────────┤ Checagem direita ├────────────
-	loadn r2, #'d'
-	cmp r1, r2		; dir == 'd'
-	jeq pos_incrementando
+    ; ────────────┤ Checagem de movimento vertical ├────────────
+    loadn r3, #0    ; velocidades[0] = #40 -> vertical (subindo || descendo)
+    
+    ; ────────────┤ Checagem subindo ├────────────
+    loadn r2, #'w'
+    cmp r1, r2      ; dir == 'w'
+    jeq pos_decrementando
+    
+    ; ────────────┤ Checagem descendo ├────────────
+    loadn r2, #'s'
+    cmp r1, r2      ; dir == 's'
+    jeq pos_incrementando
+    
+    ; ────────────┤ Checagem de movimento horizontal ├────────────
+    loadn r3, #1    ; velocidades[1] = #1 -> horizontal (esquerda || direita)
+    
+    ; ────────────┤ Checagem direita ├────────────
+    loadn r2, #'d'
+    cmp r1, r2      ; dir == 'd'
+    jeq pos_incrementando
 
-	; ────────────┤ Checagem esquerda ├────────────
-	loadn r2, #'a'	; velocidades[3] = indo pra esquerda
-	cmp r1, r2		; dir == 'a'
-	jeq pos_decrementando
-	
-	jmp le_mov	; Se não moveu -> Le entrada de novo
+    ; ────────────┤ Checagem esquerda ├────────────
+    loadn r2, #'a'  ; velocidades[3] = indo pra esquerda
+    cmp r1, r2      ; dir == 'a'
+    jeq pos_decrementando
+    
+    jmp le_mov  ; Se não moveu -> Le entrada de novo
 
 
     ; ────────────┤ Funções de update da posição ├────────────
 ; Geram a velocidade de movimentação no r2
-pos_incrementando:	; Movimento para direita ou para baixo -> Incrementa pos
-	nop
-	loadn r1, #speed	; r1 = end(speed)
-	add r1, r1, r3			; r1 = end(speed[i])
-	loadi r2, r1			; r2 = speed[i]
-	
-	add r1, r0, r2	; r1 = prox_pos | prox_pos = pos_atual + speed
-	
-	jmp confere_colisao
+pos_incrementando:  ; Movimento para direita ou para baixo -> Incrementa pos
+    nop
+    loadn r1, #speed    ; r1 = end(speed)
+    add r1, r1, r3          ; r1 = end(speed[i])
+    loadi r2, r1            ; r2 = speed[i]
+    
+    add r1, r0, r2  ; r1 = prox_pos | prox_pos = pos_atual + speed
+    
+    jmp confere_colisao
 
-pos_decrementando:	; Movimento para esquerda ou para cima -> Decrementa pos
-	nop
-	loadn r1, #speed	; r1 = end(speed)
-	add r1, r1, r3			; r1 = end(speed[i])
-	loadi r2, r1			; r2 = speed[i]
-	
-	sub r1, r0, r2	; r1 = prox_pos | prox_pos = pos_atual - speed
+pos_decrementando:  ; Movimento para esquerda ou para cima -> Decrementa pos
+    nop
+    loadn r1, #speed    ; r1 = end(speed)
+    add r1, r1, r3          ; r1 = end(speed[i])
+    loadi r2, r1            ; r2 = speed[i]
+    
+    sub r1, r0, r2  ; r1 = prox_pos | prox_pos = pos_atual - speed
 
 confere_colisao:
-    loadn r6, #tile_map1	; r6 = end(tile_map)
-	add r6, r6, r1	; r6 = end(tile_map[prox_pos])
-	loadi r6, r6	; r6 = tile_map[prox_pos] | sprite que vamos comparard
+    loadn r6, #tile_map1    ; r6 = end(tile_map)
+    add r6, r6, r1  ; r6 = end(tile_map[prox_pos])
+    loadi r6, r6    ; r6 = tile_map[prox_pos] | sprite que vamos comparard
 
 
     ; ────┤ Posicao vazia: continua movendo ├────
-	loadn r4, #' '
-	cmp r6, r4
-	jne posicao_nao_vazia
-	
-	call atualiza_gelos
+    loadn r4, #' '
+    cmp r6, r4
+    jne posicao_nao_vazia
+    
+    call atualiza_gelos
     call atualiza_chao
-	call movimentar_player
+    call movimentar_player
     jmp le_mov      ; continua a movimentação
-	; ────────────────────────────────────────
+    ; ────────────────────────────────────────
     
 
     posicao_nao_vazia:
-	; ────┤ Chave: muito chave neh truta, nois eh fechamento ├────
-	loadn r4, #'*'
-	cmp r6, r4
-	jne nao_coletou_chave
+    ; ────┤ Chave: muito chave neh truta, nois eh fechamento ├────
+    loadn r4, #'*'
+    cmp r6, r4
+    jne nao_coletou_chave
 
     call atualiza_chao
-	call movimentar_player
-	jmp le_mov      ; continua a movimentação
-	; ────────────────────────────────────────
-	
+    call movimentar_player
+    jmp le_mov      ; continua a movimentação
+    ; ────────────────────────────────────────
+    
 
-	nao_coletou_chave:
-	; ────┤ Agua: perder jogo ├────
-	loadn r4, #'.'
-	cmp r6, r4
+    nao_coletou_chave:
+    ; ────┤ Agua: perder jogo ├────
+    loadn r4, #'.'
+    cmp r6, r4
     loadn r2, #2
-	jeq fim_jogo
-	
+    jeq fim_jogo
+    
 
-	; ────┤ Bandeira: ganhar jogo ├────
-	loadn r4, #'E'
-	cmp r6, r4
+    ; ────┤ Bandeira: ganhar jogo ├────
+    loadn r4, #'E'
+    cmp r6, r4
     loadn r2, #1
     jeq fim_jogo
 
@@ -1678,13 +1677,13 @@ atualiza_chao:
 
     mov r2, r0
     loadn r6, #tile_map1; r6 = end(tile_map)
-	add r6, r6, r2	; r6 = end(tile_map[chao])
+    add r6, r6, r2  ; r6 = end(tile_map[chao])
  
     loadn r3, #'.'
-	storei r6, r3	; Atualiza o tile_map
+    storei r6, r3   ; Atualiza o tile_map
     loadn r4, #1024
 
-	call imprime_pixel
+    call imprime_pixel
 
     ; pop r6
     ; pop r4
@@ -1706,24 +1705,24 @@ atualiza_chao:
 ; Retorno:
 ;   r0 = r1 = nova posição do player
 ;──────────────────────────────────────────────────────
-movimentar_player:	
+movimentar_player:  
     ; push r2
     ; push r3
     ; push r4
     ; push r5
     ; push r6
 
-	mov r0, r1		; r0 = prox_pos
-	loadn r6, #tile_map1	; r3 = end(tile_map)
+    mov r0, r1      ; r0 = prox_pos
+    loadn r6, #tile_map1    ; r3 = end(tile_map)
 
     mov r2, r0
     loadn r3, #'@'
-	add r6, r6, r2	; r6 = end(tile_map[prox_pos])
-	storei r6, r3	; Atualiza o tile_map
+    add r6, r6, r2  ; r6 = end(tile_map[prox_pos])
+    storei r6, r3   ; Atualiza o tile_map
     loadn r4, #512
 
-	call imprime_pixel
-	call delay_clock
+    call imprime_pixel
+    call delay_clock
 
     ; pop r6
     ; pop r5
@@ -1731,7 +1730,7 @@ movimentar_player:
     ; pop r3
     ; pop r2
 
-	rts
+    rts
 
 
 ;──────────────────────────────────────────────────────
@@ -1764,26 +1763,29 @@ atualiza_gelos:
 imprime_pixel:
     push r2
     push r3
-	push r4
+    push r4
     push r5
-	
+    
     loadn r5, #80
     add r2, r2, r5
-	add r3, r3, r4
-	outchar r3, r2	
+    add r3, r3, r4
+    outchar r3, r2  
 
-	pop r5
-	pop r4
+    pop r5
+    pop r4
     pop r3
     pop r2
-	rts
+    rts
 
-
+;──────────────────────────────────────────────────────
+; Rotina: imprime_pontuacao
+; Objetivo: Imprime o texto de pontuação no topo da tela
+;──────────────────────────────────────────────────────
 imprime_pontuacao:
     push r3
-	; push r5
-	; push r6
-	; push r7
+    push r5
+    push r6
+    push r7
 
     loadn r5, points_string
     load r6, points_pos
@@ -1798,12 +1800,16 @@ imprime_pontuacao:
         cmp r3, r7
         jne string_loop
 
-    ; pop r7
-    ; pop r6
-    ; pop r5
+    pop r7
+    pop r6
+    pop r5
     pop r3
-	rts
+    rts
 
+;──────────────────────────────────────────────────────
+; Rotina: imprime_num_gelos
+; Objetivo: Imprime o número de gelos ao lado do texto de pontuação
+;──────────────────────────────────────────────────────
 imprime_num_gelos:
     push r0
     push r1
@@ -1838,11 +1844,13 @@ imprime_num_gelos:
     pop r0
     rts
 
-;--------------------------------------------------
-; imprime_numero
-; Entrada: r0 = número, r1 = posição na tela
-; Usa: r2-r7
-;--------------------------------------------------
+;──────────────────────────────────────────────────────
+; Rotina: imprime_numero
+; Objetivo: Imprime um unico numero na tela, convertendo cada algarismo para char
+; Entradas:
+;   r0 = Numero
+;   r1 = Posicao na tela
+;──────────────────────────────────────────────────────
 imprime_numero:
     push r2
     push r3
@@ -1895,48 +1903,48 @@ imprime_numero_fim:
 
 delay_clock:
 
-	push r0
+    push r0
 
-	push r1
+    push r1
 
-	push r2
+    push r2
 
-	
+    
 
-	loadn r0, #1		; n de loops
+    loadn r0, #1        ; n de loops
 
-	loadn r2, #0
+    loadn r2, #0
 
-	
+    
 
-	delay_loop:
+    delay_loop:
 
-	loadn r1, #300000	; n de nops
+    loadn r1, #300000   ; n de nops
 
-	dec r0
+    dec r0
 
-	delay_nop:	; roda (n_loops * n_nops) vezes
+    delay_nop:  ; roda (n_loops * n_nops) vezes
 
-	nop
+    nop
 
-	dec r1
+    dec r1
 
-	cmp r1, r2
+    cmp r1, r2
 
-	jne delay_nop
+    jne delay_nop
 
-	
+    
 
-	cmp r0, r2
+    cmp r0, r2
 
-	jne delay_loop
+    jne delay_loop
 
-	
+    
 
-	pop r2
+    pop r2
 
-	pop r1
+    pop r1
 
-	pop r0
+    pop r0
 
-	rts
+    rts

@@ -1,16 +1,18 @@
-
 ;---- Strings do menu ----
 titulo: string "============== GELO FINO ==============="
-opcao1: string "										1 - INICIAR JOGO"
-opcao2: string "										2 - INSTRUCOES"
-opcao3: string "										3 - SAIR"
+opcao1: string "                                        1 - INICIAR JOGO"
+opcao2: string "                                        2 - INSTRUCOES"
+opcao3: string "                                        3 - SAIR"
 
 instrucoes_titulo: string "============== INSTRUCOES =============="
 instrucoes_mov: string "MOVIMENTO: W - A - S - D"
 instrucoes_obj: string "OBJETIVO: COLETE AS MOEDAS (o) E CHEGUE NO FINAL (E)"
 instrucoes_evt: string "PERIGO: EVITE A AGUA (a) QUE APARECE DPS QUE VOCE PASSA"
 
-;---- Menu do Jogo ----
+;──────────────────────────────────────────────────────
+; Rotina: menu
+; Objetivo: Imprimir o menu do jogo
+;──────────────────────────────────────────────────────
 menu:
     push r0
     push r1
@@ -83,12 +85,12 @@ seleciona_opcao2:
     loadn r2, #0         ; Branco
     call imprime_string
 
-	loadn r0, #320
+    loadn r0, #320
     loadn r1, #instrucoes_obj
     loadn r2, #0         ; Branco
     call imprime_string
 
-	loadn r0, #560
+    loadn r0, #560
     loadn r1, #instrucoes_evt
     loadn r2, #0         ; Branco
     call imprime_string
@@ -103,6 +105,10 @@ seleciona_opcao3:
     halt
 
 ;---- Funções Auxiliares ----
+;──────────────────────────────────────────────────────
+; Rotina: limpa_tela
+; Objetivo: Limpar a tela '-'
+;──────────────────────────────────────────────────────
 limpa_tela:
     push r0
     push r1
@@ -124,6 +130,10 @@ limpa_loop:
     pop r0
     rts
 
+;──────────────────────────────────────────────────────
+; Rotina: imprime_string
+; Objetivo: Imprime as strings na tela
+;──────────────────────────────────────────────────────
 imprime_string:
     push r0
     push r1
@@ -131,18 +141,18 @@ imprime_string:
     push r3
     push r4
     
-    loadn r3, #'\0'      ; Terminador de string
+    loadn r3, #0     ; Terminador de string (nulo)
     
 imprime_loop:
-    loadi r4, r1         ; Carrega caractere da string
-    cmp r4, r3           ; Verifica se é o terminador
+    loadi r4, r1     ; Carrega caractere
+    cmp r4, r3       ; Verifica fim da string
     jeq imprime_fim
     
-    add r4, r4, r2       ; Aplica cor ao caractere
-    outchar r4, r0       ; Imprime na posição
+    add r4, r4, r2   ; Aplica cor
+    outchar r4, r0   ; Imprime
     
-    inc r0               ; Próxima posição na tela
-    inc r1               ; Próximo caractere da string
+    inc r0           ; Próxima posição na tela
+    inc r1           ; Próximo caractere
     jmp imprime_loop
     
 imprime_fim:
@@ -153,6 +163,10 @@ imprime_fim:
     pop r0
     rts
 
+;──────────────────────────────────────────────────────
+; Rotina: Espera tecla
+; Objetivo: Espera o usuário soltar a tecla para voltar ao menu
+;──────────────────────────────────────────────────────
 espera_tecla:
     push r0
     push r1
