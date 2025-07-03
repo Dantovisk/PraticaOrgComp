@@ -35,8 +35,18 @@
 					"file": "/C/Users/15447326/Documents/GitHub/TrabalhoOrgComp/Simulador/jogo.asm",
 					"settings":
 					{
-						"buffer_size": 164045,
+						"buffer_size": 287089,
 						"line_ending": "Windows"
+					}
+				},
+				{
+					"contents": "Searching 1 file for \"le_mov\"\n\nC:\\Users\\15447326\\Documents\\GitHub\\TrabalhoOrgComp\\Simulador\\jogo.asm:\n 4951  \n 4952  ;──────────────────────────────────────────────────────\n 4953: ; Rotina: le_mov\n 4954  ; Objetivo: Le a entrada do usuário para movimentação, e checa colisões\n 4955  ; Entradas:\n ....\n 4959  ;   r0 = nova posicao do player\n 4960  ;──────────────────────────────────────────────────────\n 4961: le_mov:\n 4962      loadn r1, #0\n 4963      loadn r2, #255\n ....\n 4965      inchar r1       ; r1 = dir | direção lida pelo usuario\n 4966      cmp r1, r2      ; nao leu nada -> loop pra ler denovo\n 4967:     jeq le_mov\n 4968  \n 4969  \n ....\n 4995      cmp r1, r2      ; dir == 'a'\n 4996      jeq pos_decrementando\n 4997:     jmp le_mov  ; Se não moveu -> Le entrada de novo\n 4998  \n 4999  \n ....\n 5033      call atualiza_chao\n 5034      call movimentar_player\n 5035:     jmp le_mov      ; continua a movimentação\n 5036      ; ────────────────────────────────────────\n 5037      \n ....\n 5046      call atualiza_chao\n 5047      call movimentar_player\n 5048:     jmp le_mov      ; continua a movimentação\n 5049      ; ────────────────────────────────────────\n 5050      \n ....\n 5058      call movimentar_player\n 5059      call atualiza_gelo_duplo_verdadeiro\n 5060:     jmp le_mov\n 5061      \n 5062      ehofim:\n ....\n 5071      loadn r4, #'E'\n 5072      cmp r6, r4\n 5073:     jne le_mov\n 5074  \n 5075      load r2, points\n ....\n 5077  \n 5078      cmp r2, r4\n 5079:     jne le_mov\n 5080  \n 5081      loadn r2, #1\n 5082      jeq fim_jogo\n 5083  \n 5084:     jmp le_mov      ; Reinicia o loop do jogo\n 5085  \n 5086  ; ────────┤ Fim da Movimentação ├────────\n ....\n 5183  	loadi r0, r0\n 5184  \n 5185:     jmp le_mov\n 5186  \n 5187  \n\n11 matches in 1 file\n",
+					"settings":
+					{
+						"buffer_size": 1754,
+						"line_ending": "Windows",
+						"name": "Find Results",
+						"scratch": true
 					}
 				}
 			],
@@ -72,6 +82,7 @@
 			},
 			"file_history":
 			[
+				"/C/Users/15447326/Documents/GitHub/TrabalhoOrgComp/Simulador/jogo.asm",
 				"/C/Users/15447326/Desktop/Simulador_Windows_Tudo_Pronto_Fácil (1)/Simulador/jogo.asm",
 				"/C/Users/15507819/Downloads/processador/Simulador/jogo.asm",
 				"/Z/home/pedro-prestes/Downloads/USP/Semestre 3/PratOrgComp/Simulador/jogo.asm",
@@ -105,9 +116,10 @@
 			},
 			"find_in_files":
 			{
-				"height": 0.0,
+				"height": 90.0,
 				"where_history":
 				[
+					""
 				]
 			},
 			"find_state":
@@ -115,6 +127,7 @@
 				"case_sensitive": false,
 				"find_history":
 				[
+					"le_mov",
 					"player_two_ini_pos",
 					"inchar",
 					"r*",
@@ -147,15 +160,15 @@
 							"semi_transient": false,
 							"settings":
 							{
-								"buffer_size": 164045,
+								"buffer_size": 287089,
 								"regions":
 								{
 								},
 								"selection":
 								[
 									[
-										163457,
-										163457
+										287081,
+										287081
 									]
 								],
 								"settings":
@@ -164,10 +177,96 @@
 									"translate_tabs_to_spaces": false
 								},
 								"translation.x": 0.0,
-								"translation.y": 97926.0,
+								"translation.y": 161333.0,
 								"zoom_level": 1.0
 							},
 							"stack_index": 0,
+							"type": "text"
+						},
+						{
+							"buffer": 1,
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 1754,
+								"regions":
+								{
+									"match":
+									{
+										"flags": 112,
+										"regions":
+										[
+											[
+												190,
+												196
+											],
+											[
+												410,
+												416
+											],
+											[
+												620,
+												626
+											],
+											[
+												737,
+												743
+											],
+											[
+												883,
+												889
+											],
+											[
+												1072,
+												1078
+											],
+											[
+												1278,
+												1284
+											],
+											[
+												1385,
+												1391
+											],
+											[
+												1478,
+												1484
+											],
+											[
+												1564,
+												1570
+											],
+											[
+												1709,
+												1715
+											]
+										],
+										"scope": ""
+									}
+								},
+								"selection":
+								[
+									[
+										417,
+										417
+									]
+								],
+								"settings":
+								{
+									"detect_indentation": false,
+									"line_numbers": false,
+									"output_tag": 1,
+									"result_base_dir": "",
+									"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+									"result_line_regex": "^ +([0-9]+):",
+									"scroll_past_end": true,
+									"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 1,
 							"type": "text"
 						}
 					]
@@ -212,7 +311,7 @@
 			{
 				"height": 0.0
 			},
-			"position": "0,2,3,-1,-1,-1,-1,760,966,221,1622",
+			"position": "0,2,3,-32000,-32000,-1,-1,760,966,221,1622",
 			"project": "",
 			"replace":
 			{

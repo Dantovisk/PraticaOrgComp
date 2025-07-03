@@ -1,5 +1,5 @@
 MIF/HEX Update report for AP9
-Thu Jul  3 03:46:04 2025
+Thu Jul  3 12:09:48 2025
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -36,7 +36,7 @@ on the Quartus Prime software download page.
 +---------------------------------------------------------------+
 ; MIF/HEX Update Summary                                        ;
 +-----------------------+---------------------------------------+
-; MIF/HEX Update Status ; Successful - Thu Jul  3 03:46:04 2025 ;
+; MIF/HEX Update Status ; Successful - Thu Jul  3 12:09:48 2025 ;
 ; Revision Name         ; AP9                                   ;
 ; Top-level Entity Name ; AP9                                   ;
 ; Family                ; Cyclone V                             ;
@@ -44,16 +44,16 @@ on the Quartus Prime software download page.
 +-----------------------+---------------------------------------+
 
 
-+---------------------------------------------------------------+
-; MIF/HEX Update Processed Files                                ;
-+---------------------------------------------------------------+
-; File Name                                                     ;
-+---------------------------------------------------------------+
-; C:/Users/15507819/Downloads/processador/DE0_CV/charmap.mif    ;
-; C:/Users/15507819/Downloads/processador/DE0_CV/cpuram.mif     ;
-; C:/Users/15507819/Downloads/processador/DE0_CV/video_mem1.mif ;
-; C:/Users/15507819/Downloads/processador/DE0_CV/video_mem2.mif ;
-+---------------------------------------------------------------+
++--------------------------------------------------------------------------+
+; MIF/HEX Update Processed Files                                           ;
++--------------------------------------------------------------------------+
+; File Name                                                                ;
++--------------------------------------------------------------------------+
+; C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/charmap.mif    ;
+; C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/cpuram.mif     ;
+; C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/video_mem1.mif ;
+; C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/video_mem2.mif ;
++--------------------------------------------------------------------------+
 
 
 +-------------------------+
@@ -62,18 +62,27 @@ on the Quartus Prime software download page.
 Info: *******************************************************************
 Info: Running Quartus Prime MIF/HEX Update
     Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
-    Info: Processing started: Thu Jul  3 03:46:00 2025
+    Info: Processing started: Thu Jul  3 12:09:43 2025
 Info: Command: quartus_cdb AP9 -c AP9 --update_mif
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Warning (113031): 8 out of 1024 addresses are reinitialized. The latest initialized data will replace the existing data. There are 8 warnings found, and 8 warnings are reported. File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/charmap.mif Line: 1
+    Warning (113030): Memory Initialization File address 720 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 798
+    Warning (113030): Memory Initialization File address 721 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 799
+    Warning (113030): Memory Initialization File address 722 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 800
+    Warning (113030): Memory Initialization File address 723 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 801
+    Warning (113030): Memory Initialization File address 724 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 802
+    Warning (113030): Memory Initialization File address 725 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 803
+    Warning (113030): Memory Initialization File address 726 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 804
+    Warning (113030): Memory Initialization File address 727 is reinitialized File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/ Line: 805
 Info (39024): Processed the following Memory Initialization File(s)
-    Info (39025): Processed Memory Initialization File C:/Users/15507819/Downloads/processador/DE0_CV/charmap.mif File: C:/Users/15507819/Downloads/processador/DE0_CV/charmap.mif Line: 0
-    Info (39025): Processed Memory Initialization File C:/Users/15507819/Downloads/processador/DE0_CV/cpuram.mif File: C:/Users/15507819/Downloads/processador/DE0_CV/cpuram.mif Line: 0
-    Info (39025): Processed Memory Initialization File C:/Users/15507819/Downloads/processador/DE0_CV/video_mem1.mif File: C:/Users/15507819/Downloads/processador/DE0_CV/video_mem1.mif Line: 0
-    Info (39025): Processed Memory Initialization File C:/Users/15507819/Downloads/processador/DE0_CV/video_mem2.mif File: C:/Users/15507819/Downloads/processador/DE0_CV/video_mem2.mif Line: 0
-Info: Quartus Prime MIF/HEX Update was successful. 0 errors, 1 warning
+    Info (39025): Processed Memory Initialization File C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/charmap.mif File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/charmap.mif Line: 0
+    Info (39025): Processed Memory Initialization File C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/cpuram.mif File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/cpuram.mif Line: 0
+    Info (39025): Processed Memory Initialization File C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/video_mem1.mif File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/video_mem1.mif Line: 0
+    Info (39025): Processed Memory Initialization File C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/video_mem2.mif File: C:/Users/15447326/Documents/GitHub/TrabalhoOrgComp/DE0_CV/video_mem2.mif Line: 0
+Info: Quartus Prime MIF/HEX Update was successful. 0 errors, 10 warnings
     Info: Peak virtual memory: 4899 megabytes
-    Info: Processing ended: Thu Jul  3 03:46:04 2025
-    Info: Elapsed time: 00:00:04
+    Info: Processing ended: Thu Jul  3 12:09:48 2025
+    Info: Elapsed time: 00:00:05
     Info: Total CPU time (on all processors): 00:00:04
 
 
