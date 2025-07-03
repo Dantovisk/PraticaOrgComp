@@ -1,6 +1,6 @@
 # Thin Ice Assembly Game — ICMC Processor (FPGA)
 
-Este projeto é uma implementação do minigame Thin Ice do Club Penguin, inteiramente desenvolvido em linguagem de montagem (assembly) para o Processador do ICMC.
+Este projeto é uma implementação do antigo minigame Thin Ice do Club Penguin, inteiramente desenvolvido em linguagem de montagem (assembly) para o Processador do ICMC.
 Além do jogo, propusemos e implementamos uma nova instrução no processador, a operação NAND lógico, estendendo a arquitetura original do processador.
 
 ## Descrição do jogo
@@ -12,7 +12,7 @@ O jogo consiste em mover um personagem por um tabuleiro de gelo, onde cada bloco
 - Detecção de vitória e derrota.
 - Atualização visual do estado do tabuleiro.
 - Sprites feitos especialmente para o jogo.
-- Facilidade em criar um novo mapa
+- Facilidade em criar um novo mapa (modding).
 
 ### Como criar um mapa
 Para-se criar um novo mapa, basta desenhar uma pixel art 40x28 e salvá-lo em formato PNG, respeitando a seguinte tabela de cores:
@@ -41,11 +41,14 @@ Após isso, pode-se usar o montador do simulador para gerar um 'cpuram.mif', que
 Caso queira alterar um sprite do jogo, basta criar uma pixel art 8x8 e salvar em um arquivo png.
 Então pode-se rodar: 
 ```bash
-python png_to_mif.py {nome do arquivo de imagem} {caracter a ser sibstituido}
+python png_to_mif.py {nome do arquivo de imagem} {caracter a ser substituido}
 ```
 E o programa imprimirá no terminal o trecho de código que deve-se substituir no charmap.mif.
 
-## Vídeo explicativo do jogo
+## Funcionalidade extra para o processador do ICMC
+Implementamos a funcionalidade NAND no processador. A operação NAND (Not AND) é uma operação lógica que produz uma saída verdadeira somente se pelo menos uma das entradas for falsa, assim expandindo as capacidades lógicas do processador.
+
+## Vídeo explicativo do jogo e da funcionalidade
 
 
 ## Alunos
