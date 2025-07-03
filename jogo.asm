@@ -3500,37 +3500,37 @@ imprimir_mapa_loop:
 
     loadn r6, #' '
     loadn r2, #0
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'.'
     loadn r2, #3072
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'#'
     loadn r2, #3584
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'@'
     loadn r2, #2304
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'/'
     loadn r2, #256
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'*'
     loadn r2, #2816
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'+'
     loadn r2, #2048
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'E'
@@ -4974,29 +4974,29 @@ main:
     call menu
 
     loadn r0, #0
-   jmp prox_nivel
-   ;; Loadar as variáveis da primeira fase
-   ;load r0, player_pos1
-   ;store player_pos, r0
-   ;load r0, end_pos1
-   ;store end_pos, r0
-   ;load r0, total_gelos1
-   ;store total_gelos, r0
-   ;load r0, gate_pos1
-   ;store gate_pos, r0
-   ;loadn r0, #tile_map1
-   ;store mapa_atual, r0
+    jmp prox_nivel
+    ;; Loadar as variáveis da primeira fase
+    ;load r0, player_pos1
+    ;store player_pos, r0
+    ;load r0, end_pos1
+    ;store end_pos, r0
+    ;load r0, total_gelos1
+    ;store total_gelos, r0
+    ;load r0, gate_pos1
+    ;store gate_pos, r0
+    ;loadn r0, #tile_map1
+    ;store mapa_atual, r0
 
-   ;; Imprime o mapa na tela a partir da posição 80
-   ;load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
-   ;load r1, mapa_atual          ; Endereço do mapa_atual 
-   ;loadn r2, #256               ; Cor branca
-   ;loadn r3, #1120              ; Tamanho do mapa 
-   ;
-   ;call imprimir_mapa
-   ;call imprime_pontuacao
+    ;; Imprime o mapa na tela a partir da posição 80
+    ;load r0, pos_inicial_mapa    ; Carrega a posição inicial da variável
+    ;load r1, mapa_atual          ; Endereço do mapa_atual 
+    ;loadn r2, #256               ; Cor branca
+    ;loadn r3, #1120              ; Tamanho do mapa 
+    ;
+    ;call imprimir_mapa
+    ;call imprime_pontuacao
 
-   ;load r0, player_pos
+    ;load r0, player_pos
 
 
 ; ────────────┤ Funções de movimentação ├────────────
@@ -5012,11 +5012,15 @@ main:
 ;──────────────────────────────────────────────────────
 le_mov:
     loadn r1, #0
-    loadn r2, #0
+    loadn r2, #255
 
     inchar r1       ; r1 = dir | direção lida pelo usuario
     cmp r1, r2      ; nao leu nada -> loop pra ler denovo
     jeq le_mov
+le_mov2:
+    inchar r3 
+    cmp r3, r2      ; nao leu nada -> loop pra ler denovo
+    jne le_mov2
 
 
 ; r1 = direção lida
@@ -5124,11 +5128,12 @@ confere_colisao:
     cmp r6, r4
     jne le_mov
 
-    load r2, points
+    load r3, points
     load r4, total_gelos_atual
 
-    cmp r2, r4
-    jne le_mov
+    cmp r3, r4
+    loadn r2, #2
+    jne fim_jogo
 
     loadn r2, #1
     jeq fim_jogo
@@ -5469,7 +5474,6 @@ imprime_pontuacao:
     pop r6
     pop r5
     pop r3
-    rts
 
 ;──────────────────────────────────────────────────────
 ; Rotina: imprime_num_gelos

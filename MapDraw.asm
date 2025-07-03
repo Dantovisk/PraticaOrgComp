@@ -67,37 +67,37 @@ imprimir_mapa_loop:
 
     loadn r6, #' '
     loadn r2, #0
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'.'
     loadn r2, #3072
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'#'
     loadn r2, #3584
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'@'
     loadn r2, #2304
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'/'
     loadn r2, #256
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'*'
     loadn r2, #2816
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'+'
     loadn r2, #2048
-    cmp r5, r2
+    cmp r5, r6
     jeq imprime_com_cor
 
     loadn r6, #'E'
