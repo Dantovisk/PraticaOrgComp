@@ -3435,24 +3435,24 @@ qnt_niveis: var #1
  ; Variaveis do Jogo
 player_pos_atual: var #1
 player_pos: var #3
-	static player_pos + #0, player_pos1
-	static player_pos + #1, player_pos2
-	static player_pos + #2, player_pos3
+	static player_pos + #0, #player_pos1
+	static player_pos + #1, #player_pos2
+	static player_pos + #2, #player_pos3
 end_pos_atual: var #1
 end_pos: var #3
-	static end_pos + #0, end_pos1
-	static end_pos + #1, end_pos2
-	static end_pos + #2, end_pos3
+	static end_pos + #0, #end_pos1
+	static end_pos + #1, #end_pos2
+	static end_pos + #2, #end_pos3
 gate_pos_atual: var #1
 gate_pos: var #3
-	static gate_pos + #0, gate_pos1
-	static gate_pos + #1, gate_pos2
-	static gate_pos + #2, gate_pos3
+	static gate_pos + #0, #gate_pos1
+	static gate_pos + #1, #gate_pos2
+	static gate_pos + #2, #gate_pos3
 total_gelos_atual: var #1
 total_gelos: var #3
-	static total_gelos + #0, total_gelos1
-	static total_gelos + #1, total_gelos2
-	static total_gelos + #2, total_gelos3
+	static total_gelos + #0, #total_gelos1
+	static total_gelos + #1, #total_gelos2
+	static total_gelos + #2, #total_gelos3
 pos_gelo_duplo: var #1
 static pos_gelo_duplo + #0, #0
 ;---- Variáveis ----
