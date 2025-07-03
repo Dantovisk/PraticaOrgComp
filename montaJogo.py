@@ -14,7 +14,7 @@ def processa_arquivo(nome_arquivo, arquivos_incluidos):
     arquivos_incluidos.add(nome_arquivo)
 
     try:
-        with open(nome_arquivo, 'r') as arquivo:
+        with open(nome_arquivo, 'r', encoding='latin-1') as arquivo:
             for linha in arquivo:
                 linha_strip = linha.strip()
                 if linha_strip.startswith("#include"):
@@ -36,7 +36,7 @@ def montar_arquivo_principal(arquivo_entrada, arquivo_saida):
     arquivos_incluidos = set()
     linhas_final = processa_arquivo(arquivo_entrada, arquivos_incluidos)
 
-    with open(arquivo_saida, 'w') as saida:
+    with open(arquivo_saida, 'w', encoding='latin-1') as saida:
         saida.writelines(linhas_final)
 
     print(f"Arquivo '{arquivo_saida}' criado com sucesso! ({len(arquivos_incluidos)} arquivos incluídos)")
