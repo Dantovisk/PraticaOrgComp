@@ -48,8 +48,8 @@ E o programa imprimirá no terminal o trecho de código que deve-se substituir n
 ## Funcionalidade extra para o processador do ICMC
 Implementamos a funcionalidade NAND no processador. A operação NAND (Not AND) é uma operação lógica que produz uma saída verdadeira somente se pelo menos uma das entradas for falsa, assim expandindo as capacidades lógicas do processador.
 
-## Vídeo explicativo do jogo e da funcionalidade
-
+## Vídeo explicativo do jogo
+![https://youtu.be/CeaaKdjU3Rg](https://youtu.be/CeaaKdjU3Rg)
 
 ## Alunos
 - Dante Brito Lourenço - 15447326
